@@ -12,8 +12,11 @@ public class EnvironmentController : MonoBehaviour {
 	[SerializeField]
 	public List<GameObject> tiles;
 
+	private GameObject environmentParent;
+
 	void Start () {
 		player = GameObject.FindWithTag("Player");
+		environmentParent = GameObject.FindWithTag("EnvParent");
 		SetCamera();
 		SetGroundCollider();
 		CreateEnvironment();
@@ -48,6 +51,7 @@ public class EnvironmentController : MonoBehaviour {
 		for (int i = 0; i < poolSize; i++) {
 			GameObject go = Instantiate(tile, Vector3.zero, Quaternion.identity);
 			tiles.Add(go);
+			go.transform.parent = environmentParent.transform;
 			go.GetComponent<TileProperties>().thisElement = i;
 			go.gameObject.GetComponent<TileProperties>().initSpawn();
 			go.transform.position = tilePos;

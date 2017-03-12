@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     private bool wallSliding;
     private int wallDirX;
 
+	public bool stop;
+
     private void Start()
     {
         controller = GetComponent<Controller2D>();
@@ -48,7 +50,7 @@ public class Player : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime, directionalInput);
 
-        if (controller.collisions.above || controller.collisions.below)
+        if (controller.collisions.above || controller.collisions.below || stop)
         {
             velocity.y = 0f;
         }
