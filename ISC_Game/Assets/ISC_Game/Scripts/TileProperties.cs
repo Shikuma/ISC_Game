@@ -6,24 +6,29 @@ public class TileProperties : MonoBehaviour {
 
 	[SerializeField]
 	public Sprite[] pieces, obstacles;
-	public GameObject piece, obstacle;
-	public bool hasObstacle;
+	public GameObject piece, obstacle, obstacleTrigger;
+	public bool hasObstacle, dealtPoints;
 	private float poolEnd, poolStart;
 	public int thisElement;
+	private GameObject player;
 
 	private GameObject gameController;
 	private EnvironmentController ec;
+	private PlayerStats ps;
 
 	void Start() {
 		gameController = GameObject.FindWithTag("GameController");
 		ec = gameController.gameObject.GetComponent<EnvironmentController>();
-
+		player = GameObject.FindWithTag("Player");
+		ps = player.GetComponent<PlayerStats>();
 		poolStart = ec.screenSize.x + 5f;
 		poolEnd = -5f;
+		dealtPoints = false;
 	}
 
 	void Update() {
 		if(transform.position.x < poolEnd) ResetPosition();
+		ServePoints();
 	}
 
 	
@@ -52,6 +57,8 @@ public class TileProperties : MonoBehaviour {
 				newPos = transform.position;
 				newPos.y += obstacle.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2;
 				obstacle.transform.position = newPos;
+
+				obstacle.GetComponent<BoxCollider2D>().size = obstacle.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size;
 			}
 
 		}
@@ -67,6 +74,7 @@ public class TileProperties : MonoBehaviour {
 
 	public void ResetPosition() {
 		hasObstacle = false;
+		dealtPoints = false;
 		obstacle.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
 		int previousChild = thisElement;
@@ -79,6 +87,16 @@ public class TileProperties : MonoBehaviour {
 		transform.position = newPos;
 
 		SetChildren();
+	}
+
+	public void ServePoints() {
+		if (hasObstacle && !dealtPoints) {
+			if (transform.position.x < player.transform.position.x - 1) {
+				ps.obstaclesPlayerSuccessfullyJumpedOver++;
+				ps.UpdateScore(25f);
+				dealtPoints = true;
+			}
+		}
 	}
 
 }

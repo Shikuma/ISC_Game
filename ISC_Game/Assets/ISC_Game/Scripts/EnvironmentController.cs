@@ -13,10 +13,10 @@ public class EnvironmentController : MonoBehaviour {
 	public List<GameObject> tiles;
 
 	void Start () {
+		player = GameObject.FindWithTag("Player");
 		SetCamera();
 		SetGroundCollider();
 		CreateEnvironment();
-		SpawnPlayer();
 	}
 	
 	void Update () {
@@ -29,6 +29,7 @@ public class EnvironmentController : MonoBehaviour {
 		screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + screenSize.x, Camera.main.transform.position.y + screenSize.y, -10.0f);
 		screenSize *= 2;
+		player.gameObject.GetComponent<PlayerController>().SpawnPlayer();
 	}
 
 	void SetGroundCollider() {
@@ -52,10 +53,5 @@ public class EnvironmentController : MonoBehaviour {
 			go.transform.position = tilePos;
 			tilePos.x += go.gameObject.GetComponent<TileProperties>().piece.gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
 		}
-	}
-
-	void SpawnPlayer() {
-		player = GameObject.FindWithTag("Player");
-		player.transform.position = new Vector2(screenSize.x/4, 3*screenSize.y/4);
 	}
 }

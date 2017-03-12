@@ -9,17 +9,5 @@ public class TilePooling : MonoBehaviour {
 
 
 
-	void Start() {
-		gameController = GameObject.FindWithTag("GameController");
-		ec = gameController.gameObject.GetComponent<EnvironmentController>();
-	}
 
-	public void SetChildren(GameObject tile) {
-		TileProperties tp = tile.GetComponent<TileProperties>();
-		
-	}
-
-	public void ResetPosition(GameObject tile) {
-		TileProperties tp = tile.GetComponent<TileProperties>();
-	}
 }
