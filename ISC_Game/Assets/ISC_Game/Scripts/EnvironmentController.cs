@@ -4,30 +4,24 @@ using UnityEngine;
 
 public class EnvironmentController : MonoBehaviour {
 
-	private Vector2 pool_createPos, pool_destroyPos, screenSize;
+	public Vector2 screenSize;
 	public int poolSize;
 
 	[SerializeField]
-	private GameObject player, walkingSurfacePrefab, piece_ground;
+	private GameObject player, tile, walkingSurfacePrefab;
 	[SerializeField]
-	private List<GameObject> envPieces;
+	public List<GameObject> tiles;
 
 	void Start () {
-		
 		SetCamera();
 		SetGroundCollider();
 		CreateEnvironment();
 		SpawnPlayer();
-		//Set create and destroy positions for pooling
-
-
 	}
 	
 	void Update () {
 		
 	}
-
-	
 
 	void SetCamera() {
 		//Get the screen size to world dimension
@@ -49,12 +43,14 @@ public class EnvironmentController : MonoBehaviour {
 	}
 
 	void CreateEnvironment() {
-		Vector2 piecePos = new Vector2(-5f, 3*screenSize.y/5);
+		Vector2 tilePos = new Vector2(-5f, 3*screenSize.y/5);
 		for (int i = 0; i < poolSize; i++) {
-			GameObject go = Instantiate(piece_ground, Vector3.zero, Quaternion.identity);
-			if(i==0) piecePos.y -= go.gameObject.GetComponent<SpriteRenderer>().bounds.size.y/2;
-			go.transform.position = piecePos;
-			piecePos.x += piece_ground.gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
+			GameObject go = Instantiate(tile, Vector3.zero, Quaternion.identity);
+			tiles.Add(go);
+			go.GetComponent<TileProperties>().thisElement = i;
+			go.gameObject.GetComponent<TileProperties>().initSpawn();
+			go.transform.position = tilePos;
+			tilePos.x += go.gameObject.GetComponent<TileProperties>().piece.gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
 		}
 	}
 
