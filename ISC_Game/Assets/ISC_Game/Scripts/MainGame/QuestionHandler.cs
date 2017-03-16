@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
+using System.IO;
 
 public class QuestionHandler : MonoBehaviour {
 	public GameObject answersPanel, qPanel, qResponsePanel;
@@ -11,6 +13,10 @@ public class QuestionHandler : MonoBehaviour {
 	private TimeController tc;
 	private List<Question> questions;
 	private Question currQuestion;
+
+	protected FileInfo theSourceFile = null;
+	protected StreamReader reader = null;
+	protected string text = " ";
 
 	PlayerStats ps;
 	// Use this for initialization
@@ -25,6 +31,24 @@ public class QuestionHandler : MonoBehaviour {
 		answersPanel.SetActive(false);
 		qPanel.SetActive(false);
 		qResponsePanel.SetActive(false);
+
+		theSourceFile = new FileInfo (Application.dataPath + "/TestQuestions.txt");
+		reader = theSourceFile.OpenText();
+		while (reader.Peek() > -1) {
+			try{
+				string Question = reader.ReadLine();
+				string a1 = reader.ReadLine();
+				string a2 = reader.ReadLine();
+				string a3 = reader.ReadLine();
+				string a4 = reader.ReadLine();
+				string correctA = reader.ReadLine();
+
+				questions.Add (new Question (Question, a1, a2, a3, a4, correctA));
+			}catch{
+				break;
+			}
+		}
+		reader.Close ();
 
 		questions.Add(new Question("First question: What is the answer?", "one0", "two0", "three0", "four0", "one0"));
 		questions.Add(new Question("Second question: What is the answer?", "one1", "two1", "three1", "four1", "four1"));
@@ -41,7 +65,7 @@ public class QuestionHandler : MonoBehaviour {
 		qPanel.SetActive(true);
 		answersPanel.SetActive(true);
 
-		currQuestion = questions[Random.Range(0, questions.Capacity-1)];
+		currQuestion = questions[UnityEngine.Random.Range(0, questions.Capacity-1)];
 		qText.text = currQuestion.question;
 		a1Text.text = currQuestion.answer1;
 		a2Text.text = currQuestion.answer2;
