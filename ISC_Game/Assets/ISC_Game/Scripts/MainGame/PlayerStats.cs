@@ -5,23 +5,32 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour {
 	public float score;
-	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver;
+	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect;
+	public GameObject quizPanel, gc, gameOverPanel;
+	public Text scoreText, livesText, qScoreText, gameOverText;
 
-	public Text scoreText, livesText, qScoreText;
+	QuestionHandler qHandler;
+	TimeController tc;
 
 	// Use this for initialization
 	void Start () {
+		gc = GameObject.FindWithTag("GameController");
+		tc = gc.GetComponent<TimeController>();
+
+		qHandler =  quizPanel.GetComponent<QuestionHandler>();
 		score = 0;
-		lives = 3;	
+		lives = 1;
+		totalQuestions = 0;
+		questionsCorrect = 0;
+		scoreText.text = "Score: " + score;
+		livesText.text = "Lives: " + lives;
+		qScoreText.text = "Correct: " + questionsCorrect + "/" + totalQuestions;
+		gameOverPanel.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-	}
-
-	void OpenQuestion() {
-
 	}
 
 	public void UpdateScore(float points) {
@@ -43,6 +52,20 @@ public class PlayerStats : MonoBehaviour {
 			lives--;
 			livesText.text = "Lives: " + lives;
 		}
-		//else DIE
+		print(lives);
+		if (lives <= 0) {
+			gameOverPanel.SetActive(true);
+			gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good attempt!";
+		}
+	}
+
+	public void UpdateQuestionsCount(bool correct) {
+		totalQuestions++;
+		if(correct) questionsCorrect++;
+		qScoreText.text = "Correct: " + questionsCorrect + "/" + totalQuestions;
+	}
+
+	void OpenQuestion() {
+		qHandler.DisplayRandomQuestion();
 	}
 }

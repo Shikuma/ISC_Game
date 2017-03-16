@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	//Called by environmentController after screen size and camera are repositioned in SetCamera() method
-	public void SpawnPlayer() {
+	public void SpawnPlayer(Vector2 position) {
+		spawnPos.transform.position = position;
 		transform.position = spawnPos.transform.position;
 	}
 }

@@ -38,8 +38,7 @@ public class QuestionController : MonoBehaviour {
 	void Update () {
 		if (qNum <= qList.Count) {
 			questionBox.text = qList [qNum - 1];
-		}
-			
+		}	
 	}
 
 	public void SelectAnswer(int answer){

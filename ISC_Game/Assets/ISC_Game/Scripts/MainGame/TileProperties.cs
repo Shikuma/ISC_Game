@@ -38,7 +38,7 @@ public class TileProperties : MonoBehaviour {
 		piece.gameObject.GetComponent<SpriteRenderer>().sprite = pieces[Random.Range(0, pieces.Length)];
 
 		//Determine if any of the recent tiles have had an obstacle, if so, don't generate one.
-		if (Random.Range(0, 10) < 1) {
+		if (Random.Range(0, 10) < 3) {
 			bool canObstacle = true;
 			for (int i = 1; i <= 10; i++) {
 				int checkElement = thisElement;

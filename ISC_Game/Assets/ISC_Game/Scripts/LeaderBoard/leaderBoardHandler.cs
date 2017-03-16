@@ -5,9 +5,16 @@ using UnityEngine.UI;
 
 public class leaderBoardHandler : MonoBehaviour {
 	public GameObject[] lbObjects;
+	public int topScores = 3;
+
 	GameObject objContainer;
+	ScoreObject[] userData;
+	GetGamesData ggd;
+
 	// Use this for initialization
 	void Start () {
+		ggd = gameObject.GetComponent<GetGamesData>();
+
 		lbObjects = new GameObject[10];	
 		objContainer = GameObject.FindWithTag("lbObjectContainer");
 		int i = 0;
@@ -16,17 +23,19 @@ public class leaderBoardHandler : MonoBehaviour {
 			i++;
 		}
 
-		SetData();
-
+		//userData = ggd.SortScores();
 	}
 	
 
-	void SetData() {
-		for( int i = 0; i < lbObjects.Length; i++) {
+	public void SetData(ScoreObject[] userData) {
+		this.userData = userData;
+		int j = 0;
+		for(int i = userData.Length-1; i > userData.Length - 4; i--) {
 			//Set name
-			lbObjects[i].gameObject.GetComponent<Text>().text = "Name " + i;
+			lbObjects[j].gameObject.GetComponent<Text>().text = j+1 + ". " + userData[i].firstName + " " + userData[i].lastName;
 			//Set score
-			lbObjects[i].transform.GetChild(0).GetComponent<Text>().text = i + "" + i + "" + i;
+			lbObjects[j].transform.GetChild(0).GetComponent<Text>().text = userData[i].score.ToString();
+			j++;
 		}
 	}
 }

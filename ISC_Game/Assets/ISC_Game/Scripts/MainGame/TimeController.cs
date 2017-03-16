@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeController : MonoBehaviour {
-	public bool paused, pseudoPaused;
+	public bool paused, pseudoPaused, qInProgress;
+	public GameObject pausePanel;
 
 	GameObject player, environmentParent;
 	PlayerInput pi;
@@ -14,20 +15,18 @@ public class TimeController : MonoBehaviour {
 		environmentParent = GameObject.FindWithTag("EnvParent");
 		pi = player.GetComponent<PlayerInput>();
 		ec = gameObject.GetComponent<EnvironmentController>();
+		pausePanel.SetActive(false);
 	}
 
 	public void PauseGame() {
-		paused = !paused;
-		Time.timeScale = paused ? 0 : 1;
+		if (!qInProgress) {
+			paused = !paused;
+			Time.timeScale = paused ? 0 : 1;
+		}
 	}
 
-	/*
-	public void PseudoPauseGame() {
-		pseudoPaused = !pseudoPaused;
-		pi.canJump = !pi.canJump;
-		environmentParent.gameObject.GetComponent<MoveGround>().speed = pseudoPaused ? 0 : 5 ;
-		player.gameObject.GetComponent<Player>().stop = !player.gameObject.GetComponent<Player>().stop;
-	}*/
-
-
+	public void PauseMenu() {
+		PauseGame();
+		pausePanel.SetActive(qInProgress ? false : paused);
+	}
 }

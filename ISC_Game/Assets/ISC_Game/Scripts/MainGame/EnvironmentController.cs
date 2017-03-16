@@ -32,7 +32,7 @@ public class EnvironmentController : MonoBehaviour {
 		screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
 		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + screenSize.x, Camera.main.transform.position.y + screenSize.y, -10.0f);
 		screenSize *= 2;
-		player.gameObject.GetComponent<PlayerController>().SpawnPlayer();
+		player.gameObject.GetComponent<PlayerController>().SpawnPlayer(new Vector2(screenSize.x/6, 2*screenSize.y/3));
 	}
 
 	void SetGroundCollider() {
