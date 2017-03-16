@@ -19,7 +19,7 @@ public class PlayerStats : MonoBehaviour {
 
 		qHandler =  quizPanel.GetComponent<QuestionHandler>();
 		score = 0;
-		lives = 1;
+		lives = 3;
 		totalQuestions = 0;
 		questionsCorrect = 0;
 		scoreText.text = "Score: " + score;
