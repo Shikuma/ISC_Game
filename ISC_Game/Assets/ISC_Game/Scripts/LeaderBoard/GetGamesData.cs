@@ -14,12 +14,24 @@ public class GetGamesData : MonoBehaviour {
 
 	void Start() {
 		handler = gameObject.GetComponent<leaderBoardHandler>();
+		try {
+			WWW gamesData = new WWW("http://127.0.0.1/ISC_GetHighScores.php");
+			StartCoroutine(MyCoroutine(gamesData));
+		}catch {
+			Debug.Log("connecting to 127.0.0.1 does not work.");
+		}
+		try {
+			WWW gamesData = new WWW("http://localhost/ISC_GetHighScores.php");
+			StartCoroutine(MyCoroutine(gamesData));
+		}catch {
+			Debug.Log("connecting to localhost does not work.");
+		}
+			//Change to this when switching to live
+			//WWW gamesData = new WWW("http://127.0.0.1/ISC_GetHighScores.php");
 
-		WWW gamesData = new WWW("http://localhost/ISC_GetHighScores.php");
-		StartCoroutine(MyCoroutine(gamesData));
-		//yield return gamesData;
-		
-	}
+			//yield return gamesData;
+
+		}
 
 	private IEnumerator MyCoroutine(WWW www) {
 		yield return www;

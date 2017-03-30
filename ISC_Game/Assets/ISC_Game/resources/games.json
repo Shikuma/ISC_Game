@@ -1,0 +1,28 @@
+{
+    "games":[
+        {
+            "id": 1,
+            "score": 80,
+            "user_id": 0,
+            "date_complete": "2/10/17",
+            "first_name": "Max",
+            "last_name": "Schuessler1"
+        },
+        {
+            "id": 2,
+            "score": 25,
+            "user_id": 1,
+            "date_complete": "2/10/17",
+            "first_name": "Max",
+            "last_name": "Schuessler2"
+        },
+        {
+            "id": 3,
+            "score": 50,
+            "user_id": 2,
+            "date_complete": "2/10/17",
+            "first_name": "Max",
+            "last_name": "Schuessler3"
+        }
+    ]
+}

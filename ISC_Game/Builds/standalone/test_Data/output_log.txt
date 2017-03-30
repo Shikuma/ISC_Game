@@ -1,0 +1,87 @@
+Initialize engine version: 5.5.1f1 (88d00a7498cd)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 660 (ID=0x11c0)
+    Vendor:   NVIDIA
+    VRAM:     2016 MB
+    Driver:   21.21.13.7653
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\LitJson.dll (this message is harmless)
+Loading D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\LitJson.dll into Unity Child Domain
+- Completed reload, in  0.038 seconds
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 59Hz; virtual: 3520x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.504736 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.618440 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 380.
+Total: 0.284577 ms (FindLiveObjects: 0.023884 ms CreateObjectMapping: 0.015728 ms MarkObjects: 0.230108 ms  DeleteObjects: 0.005825 ms)
+
+IsolatedStorageException: Could not find a part of the path "D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\ISC_Game\resources\games.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x00000] in <filename unknown>:0 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.File.OpenRead (System.String path) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.ReadAllText (System.String path, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.ReadAllText (System.String path) [0x00000] in <filename unknown>:0 
+  at ReadJson.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+71
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.368174 ms
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 303.
+Total: 0.227487 ms (FindLiveObjects: 0.021263 ms CreateObjectMapping: 0.027088 ms MarkObjects: 0.174183 ms  DeleteObjects: 0.003786 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.394971 ms
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 384.
+Total: 0.257488 ms (FindLiveObjects: 0.021263 ms CreateObjectMapping: 0.015728 ms MarkObjects: 0.214671 ms  DeleteObjects: 0.004951 ms)
+
+IsolatedStorageException: Could not find a part of the path "D:\Users\shikuma\Projects\Unity Projects\Project_ISC_Game\ISC_Game\Builds\standalone\test_Data\ISC_Game\resources\games.json".
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x00000] in <filename unknown>:0 
+  at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in <filename unknown>:0 
+  at System.IO.File.OpenRead (System.String path) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize) [0x00000] in <filename unknown>:0 
+  at System.IO.StreamReader..ctor (System.String path, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.ReadAllText (System.String path, System.Text.Encoding encoding) [0x00000] in <filename unknown>:0 
+  at System.IO.File.ReadAllText (System.String path) [0x00000] in <filename unknown>:0 
+  at ReadJson.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+71
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.376329 ms
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 307.
+Total: 0.199524 ms (FindLiveObjects: 0.019806 ms CreateObjectMapping: 0.015728 ms MarkObjects: 0.158745 ms  DeleteObjects: 0.004660 ms)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 3c48 -> priority: 1 
