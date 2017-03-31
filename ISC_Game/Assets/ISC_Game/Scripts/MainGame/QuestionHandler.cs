@@ -8,7 +8,8 @@ using System.IO;
 
 public class QuestionHandler : MonoBehaviour {
 	public GameObject answersPanel, qPanel, qResponsePanel;
-	public Text qText, a1Text, a2Text, a3Text, a4Text, responseText, correctAnswerText;
+	public Text qText, responseText, correctAnswerText;
+	public Text[] answersText = new Text[10];
 	private GameObject gc, player;
 	private TimeController tc;
 	private List<Question> questions;
@@ -31,7 +32,7 @@ public class QuestionHandler : MonoBehaviour {
 		answersPanel.SetActive(false);
 		qPanel.SetActive(false);
 		qResponsePanel.SetActive(false);
-
+		/*
 		theSourceFile = new FileInfo (Application.dataPath + "/TestQuestions.txt");
 		reader = theSourceFile.OpenText();
 		while (reader.Peek() > -1) {
@@ -54,7 +55,7 @@ public class QuestionHandler : MonoBehaviour {
 		questions.Add(new Question("Second question: What is the answer?", "one1", "two1", "three1", "four1", "four1"));
 		questions.Add(new Question("Third question: What is the answer?", "one2", "two2", "three2", "four2", "two2"));
 		questions.Add(new Question("Fourth question: What is the answer?", "one3", "two3", "three3", "four3", "three3"));
-
+		*/
 		print("questions capacity: " + questions.Capacity);
 	}
 	
@@ -66,11 +67,13 @@ public class QuestionHandler : MonoBehaviour {
 		answersPanel.SetActive(true);
 
 		currQuestion = questions[UnityEngine.Random.Range(0, questions.Capacity-1)];
+		/*
 		qText.text = currQuestion.question;
 		a1Text.text = currQuestion.answer1;
 		a2Text.text = currQuestion.answer2;
 		a3Text.text = currQuestion.answer3;
 		a4Text.text = currQuestion.answer4;
+		*/
 	}
 
 	public void CheckAnswer() {

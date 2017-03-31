@@ -20,8 +20,6 @@ public class GetGamesData : MonoBehaviour {
 		//Change to this when switching to live
 		//WWW gamesData = new WWW("http://127.0.0.1/ISC_GetHighScores.php");
 
-		//yield return gamesData;
-
 	}
 
 	private IEnumerator MyCoroutine(WWW www) {
