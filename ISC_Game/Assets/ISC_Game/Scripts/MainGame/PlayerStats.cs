@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour {
 	public float score;
-	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect;
+	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength;
 	public GameObject quizPanel, gc, gameOverPanel;
 	public Text scoreText, livesText, qScoreText, gameOverText;
 
-	QuestionHandler qHandler;
+	QuestionHandler2 qHandler;
 	TimeController tc;
 
 	// Use this for initialization
@@ -17,7 +17,7 @@ public class PlayerStats : MonoBehaviour {
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
 
-		qHandler =  quizPanel.GetComponent<QuestionHandler>();
+		qHandler =  quizPanel.GetComponent<QuestionHandler2>();
 		score = 0;
 		lives = 3;
 		totalQuestions = 0;
@@ -54,8 +54,7 @@ public class PlayerStats : MonoBehaviour {
 		}
 		print(lives);
 		if (lives <= 0) {
-			gameOverPanel.SetActive(true);
-			gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good attempt!";
+			EndGame();
 		}
 	}
 
@@ -63,9 +62,17 @@ public class PlayerStats : MonoBehaviour {
 		totalQuestions++;
 		if(correct) questionsCorrect++;
 		qScoreText.text = "Correct: " + questionsCorrect + "/" + totalQuestions;
+		if(totalQuestions >= gameLength) EndGame();
 	}
 
 	void OpenQuestion() {
-		qHandler.DisplayRandomQuestion();
+		qHandler.GetRandomQuestion();
+	}
+
+	public void EndGame() {
+		gameOverPanel.SetActive(true);
+		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!";
 	}
 }
+
+

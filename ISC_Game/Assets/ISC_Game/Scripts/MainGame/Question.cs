@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class Question : MonoBehaviour {
 
-	public string question, correctAnswer;
-	public int question_id;
-	public List<string> answers;
+	public int q_id;
+	public string q_text, subject;
 
-	public Question(string q, List<string> answers, string correctA, int q_id) {
-		question = q;
-		this.answers = answers;
-		correctAnswer = correctA;
-		question_id = q_id;
+	public Question(int id, string question_text, string subject) {
+		q_id = id;
+		q_text = question_text;
+		this.subject = subject;
 	}
 }
