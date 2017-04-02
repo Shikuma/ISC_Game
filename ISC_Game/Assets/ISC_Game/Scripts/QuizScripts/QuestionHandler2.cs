@@ -37,14 +37,14 @@ public class QuestionHandler2 : MonoBehaviour {
 		qResponsePanel.SetActive(false);
 
 		questionsData = new WWW("http://localhost/ISC_GetQuestions.php");
-		StartCoroutine(GetQuestions());
 		answersData = new WWW("http://localhost/ISC_GetAnswers.php");
-		
+		StartCoroutine(GetQuestions(questionsData, answersData));
+
 	}
 
-	private IEnumerator GetQuestions() {
-		yield return questionsData;
-		questionsDataText = questionsData.text;
+	private IEnumerator GetQuestions(WWW questions_www, WWW answers_www) {
+		yield return questions_www;
+		questionsDataText = questions_www.text;
 		questions = questionsDataText.Split(';');
 		for (int i = 0; i < questions.Length; i++) {
 			if (questions[i] != "") {
@@ -56,12 +56,12 @@ public class QuestionHandler2 : MonoBehaviour {
 				allQData.Add(obj);
 			}
 		}
-		StartCoroutine(GetAnswers());
+		StartCoroutine(GetAnswers(answers_www));
 	}
 
-	private IEnumerator GetAnswers() {
-		yield return answersData;
-		answersDataText = answersData.text;
+	private IEnumerator GetAnswers(WWW answers_www) {
+		yield return answers_www;
+		answersDataText = answers_www.text;
 		answers = answersDataText.Split(';');
 		for (int i = 0; i < answers.Length; i++) {
 			if (answers[i] != "") {
