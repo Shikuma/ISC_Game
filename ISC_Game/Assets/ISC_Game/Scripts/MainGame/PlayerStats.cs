@@ -5,27 +5,36 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour {
 	public float score;
-	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength;
+	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, user_id;
 	public GameObject quizPanel, gc, gameOverPanel;
-	public Text scoreText, livesText, qScoreText, gameOverText;
+	public Text scoreText, livesText, qScoreText, gameOverText, GOResponseText;
+	public GameObject user_id_input;
 
 	QuestionHandler2 qHandler;
 	TimeController tc;
 
 	// Use this for initialization
 	void Start () {
+		
+		
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
 
 		qHandler =  quizPanel.GetComponent<QuestionHandler2>();
 		score = 0;
-		lives = 3;
 		totalQuestions = 0;
 		questionsCorrect = 0;
 		scoreText.text = "Score: " + score;
 		livesText.text = "Lives: " + lives;
 		qScoreText.text = "Correct: " + questionsCorrect + "/" + totalQuestions;
 		gameOverPanel.SetActive(false);
+		user_id = 0;
+		InputField input = user_id_input.GetComponent<InputField>();
+		try {
+			user_id = int.Parse(input.text);
+			GOResponseText.text = "Thank you for submitting.";
+		} catch { GOResponseText.text = "Please insert a numerical value"; }
+		Debug.Log(input.text);
 	}
 	
 	// Update is called once per frame
@@ -72,6 +81,18 @@ public class PlayerStats : MonoBehaviour {
 	public void EndGame() {
 		gameOverPanel.SetActive(true);
 		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!";
+	}
+
+	public void UpdateUserID() {
+		InputField input = user_id_input.GetComponent<InputField>();
+		try {
+			user_id = int.Parse(input.text);
+			GOResponseText.text = "";
+			GOResponseText.color = Color.black;
+		}catch {
+			GOResponseText.text = "Please insert a numerical value";
+			GOResponseText.color = Color.red;
+		}
 	}
 }
 

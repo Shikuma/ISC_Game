@@ -191,7 +191,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		}
 
 		//Record incorrect stats
-		QuestionRecord qRecord = new QuestionRecord(currQuestion.q_text, userAnswer, currQuestion.q_id, isCorrect);
+		QuestionRecord qRecord = new QuestionRecord(currQuestion.q_text, userAnswer, currQuestion.q_id, isCorrect, ps.user_id);
 		records.Add(qRecord);
 
 		ps.obstaclesPlayerSuccessfullyJumpedOver = 0;
