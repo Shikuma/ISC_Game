@@ -74,7 +74,7 @@ public class PlayerStats : MonoBehaviour {
 		if(totalQuestions >= gameLength) EndGame();
 	}
 
-	void OpenQuestion() {
+	public void OpenQuestion() {
 		qHandler.GetRandomQuestion();
 	}
 

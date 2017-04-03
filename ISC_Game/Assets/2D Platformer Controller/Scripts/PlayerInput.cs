@@ -22,11 +22,11 @@ public class PlayerInput : MonoBehaviour
         if(canMoveVerticle) player.SetDirectionalInput(directionalInput);
 
 		if (canJump) {
-			if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow)) {
+			if (false){//Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow)) {
 				player.OnJumpInputDown();
 			}
 
-			if (Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.UpArrow)) {
+			if (false){//Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.UpArrow)) {
 				player.OnJumpInputUp();
 			}
 		}

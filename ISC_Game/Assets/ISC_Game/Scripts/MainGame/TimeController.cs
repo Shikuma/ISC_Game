@@ -23,6 +23,7 @@ public class TimeController : MonoBehaviour {
 			paused = !paused;
 			Time.timeScale = paused ? 0 : 1;
 		}
+		print ("PauseGame called");
 	}
 
 	public void PauseMenu() {
