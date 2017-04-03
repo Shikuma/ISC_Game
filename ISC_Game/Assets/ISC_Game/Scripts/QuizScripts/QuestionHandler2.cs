@@ -167,6 +167,7 @@ public class QuestionHandler2 : MonoBehaviour {
 				if (currAnswers[i].q_id == currQuestion.q_id) {
 					correctAnswerText.text = "";
 					responseText.text = "Correct! Good job!";
+					ps.obstaclesPlayerSuccessfullyJumpedOver++;
 					ps.UpdateScore(25f);
 					ps.UpdateQuestionsCount(true);
 					isCorrect = true;

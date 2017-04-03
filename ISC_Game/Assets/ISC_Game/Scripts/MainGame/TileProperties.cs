@@ -28,7 +28,7 @@ public class TileProperties : MonoBehaviour {
 
 	void Update() {
 		if(transform.position.x < poolEnd) ResetPosition();
-		ServePoints();
+		//ServePoints();
 	}
 
 	
