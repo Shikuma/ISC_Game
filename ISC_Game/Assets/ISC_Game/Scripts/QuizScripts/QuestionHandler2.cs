@@ -167,6 +167,7 @@ public class QuestionHandler2 : MonoBehaviour {
 				if (currAnswers[i].q_id == currQuestion.q_id) {
 					correctAnswerText.text = "";
 					responseText.text = "Correct! Good job!";
+					ps.UpdateScore(25f);
 					ps.UpdateQuestionsCount(true);
 					isCorrect = true;
 					break;
@@ -175,6 +176,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		}
 
 		if (!isCorrect) {
+			ps.UpdateScore(-15f);
 			ps.UpdateQuestionsCount(false);
 			ps.UpdateLives();
 			if (ps.lives <= 0) {
@@ -201,5 +203,6 @@ public class QuestionHandler2 : MonoBehaviour {
 		qResponsePanel.SetActive(false);
 		tc.qInProgress = false;
 		tc.PauseGame();
+		player.GetComponent<Player>().OnJumpInputDown();
 	}
 }

@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour {
 		if(c.gameObject.tag == "Obstacle") {
 			tp = c.GetComponentInParent<TileProperties>();
 			if (tp.hasObstacle) {
-				//ps.UpdateScore(-15f);
 				ps.OpenQuestion();
 				tp.dealtPoints = true;
 			}

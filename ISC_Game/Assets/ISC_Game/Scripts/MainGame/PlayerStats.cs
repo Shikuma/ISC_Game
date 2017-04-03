@@ -51,7 +51,7 @@ public class PlayerStats : MonoBehaviour {
 		//If answer is right += score
 		//If answer is wrong --lives
 		if (obstaclesPlayerSuccessfullyJumpedOver % 4 == 0 && obstaclesPlayerSuccessfullyJumpedOver > 0) {
-			OpenQuestion();
+			//OpenQuestion();
 			print("Time for a question!");
 		}
 	}
