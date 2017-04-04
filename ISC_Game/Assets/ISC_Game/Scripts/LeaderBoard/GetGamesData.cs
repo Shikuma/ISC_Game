@@ -14,11 +14,11 @@ public class GetGamesData : MonoBehaviour {
 
 	void Start() {
 		handler = gameObject.GetComponent<leaderBoardHandler>();
-		WWW gamesData = new WWW("http://localhost/ISC_GetHighScores.php");
+		WWW gamesData = new WWW("http://104.236.217.201/ISC_GetHighScores.php");
 		StartCoroutine(MyCoroutine(gamesData));
 		
 		//Change to this when switching to live
-		//WWW gamesData = new WWW("http://127.0.0.1/ISC_GetHighScores.php");
+		//WWW gamesData = new WWW("http://104.236.217.201/ISC_GetHighScores.php");
 
 	}
 

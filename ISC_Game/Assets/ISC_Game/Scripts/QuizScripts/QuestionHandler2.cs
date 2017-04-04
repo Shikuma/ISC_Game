@@ -38,8 +38,8 @@ public class QuestionHandler2 : MonoBehaviour {
 		answersPanel.SetActive(false);
 		qResponsePanel.SetActive(false);
 
-		questionsData = new WWW("http://localhost/ISC_GetQuestions.php");
-		answersData = new WWW("http://localhost/ISC_GetAnswers.php");
+		questionsData = new WWW("http://104.236.217.201/ISC_GetQuestions.php");
+		answersData = new WWW("http://104.236.217.201/ISC_GetAnswers.php");
 		StartCoroutine(GetQuestions(questionsData, answersData));
 
 	}
