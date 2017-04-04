@@ -22,6 +22,8 @@ public class QuestionHandler2 : MonoBehaviour {
 	private TimeController tc;
 	private PlayerStats ps;
 
+	private bool answerWasCorrect = false;
+
 	public List<QuestionRecord> records;
 
 	// Use this for initialization
@@ -56,6 +58,8 @@ public class QuestionHandler2 : MonoBehaviour {
 				allQData.Add(obj);
 			}
 		}
+		/*Question test1 = new Question(1, "The answer is A?", "Test");
+		allQData.Add(test1);*/
 		StartCoroutine(GetAnswers(answers_www));
 	}
 
@@ -74,6 +78,21 @@ public class QuestionHandler2 : MonoBehaviour {
 				allAnswers.Add(obj);
 			}
 		}
+		/*
+		Answer obj = new Answer(1, "A", 1);
+		Answer obj2 = new Answer(1, "B", 0);
+		Answer obj3 = new Answer(1, "C", 0);
+		Answer obj4 = new Answer(1, "D", 0);
+		Answer obj5 = new Answer(1, "E", 0);
+		Answer obj6 = new Answer(1, "F", 0);
+
+		allAnswers.Add(obj);
+		allAnswers.Add(obj2);
+		allAnswers.Add(obj3);
+		allAnswers.Add(obj4);
+		allAnswers.Add(obj5);
+		allAnswers.Add(obj6);
+		*/
 		RandomizeQuestions();
 	}
 
@@ -168,6 +187,7 @@ public class QuestionHandler2 : MonoBehaviour {
 					correctAnswerText.text = "";
 					responseText.text = "Correct! Good job!";
 					ps.obstaclesPlayerSuccessfullyJumpedOver++;
+					answerWasCorrect = true;
 					ps.UpdateScore(25f);
 					ps.UpdateQuestionsCount(true);
 					isCorrect = true;
@@ -178,6 +198,7 @@ public class QuestionHandler2 : MonoBehaviour {
 
 		if (!isCorrect) {
 			ps.UpdateScore(-15f);
+			answerWasCorrect = false;
 			ps.UpdateQuestionsCount(false);
 			ps.UpdateLives();
 			if (ps.lives <= 0) {
@@ -204,6 +225,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		qResponsePanel.SetActive(false);
 		tc.qInProgress = false;
 		tc.PauseGame();
-		player.GetComponent<Player>().OnJumpInputDown();
+		if(answerWasCorrect)
+			player.GetComponent<Player>().OnJumpInputUp();
 	}
 }

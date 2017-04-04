@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private float gravity;
     private float maxJumpVelocity;
     private float minJumpVelocity;
+	public float jumpAmount;
     private Vector3 velocity;
     private float velocityXSmoothing;
 
@@ -96,9 +97,9 @@ public class Player : MonoBehaviour
 
     public void OnJumpInputUp()
     {
-        if (velocity.y > minJumpVelocity)
+		if (true)//velocity.y > minJumpVelocity)
         {
-            velocity.y = minJumpVelocity;
+            velocity.y = jumpAmount;
         }
     }
 
