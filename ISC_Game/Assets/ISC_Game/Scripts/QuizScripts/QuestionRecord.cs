@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestionRecord : MonoBehaviour {
-	public string q_text, user_answer;
-	public int q_id, u_id;
+	public string dateComplete;
+	public int q_id, u_id, answer_id;
 	public bool isCorrect;
 
-	public QuestionRecord(string question_text, string u_answer, int question_id, bool isCorrect, int user_id) {
-		q_text = question_text;
-		user_answer = u_answer;
-		q_id = question_id;
+	public QuestionRecord(int a_id, string date_complete, bool isCorrect, int user_id, int question_id) {
+		answer_id = a_id;
+		dateComplete = date_complete;
 		this.isCorrect = isCorrect;
 		u_id = user_id;
+		q_id = question_id;
+
 	}
 }

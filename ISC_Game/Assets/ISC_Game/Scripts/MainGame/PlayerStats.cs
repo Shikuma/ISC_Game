@@ -7,16 +7,15 @@ public class PlayerStats : MonoBehaviour {
 	public float score;
 	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, user_id;
 	public GameObject quizPanel, gc, gameOverPanel;
-	public Text scoreText, livesText, qScoreText, gameOverText, GOResponseText;
+	public Text scoreText, livesText, gameOverText, GOResponseText, questionsAttemptTxt, questionsCorrectTxt, questionsLeftTxt;
 	public GameObject user_id_input;
+	private string firstName, lastName;
 
 	QuestionHandler2 qHandler;
 	TimeController tc;
 
 	// Use this for initialization
 	void Start () {
-		
-		
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
 
@@ -26,7 +25,9 @@ public class PlayerStats : MonoBehaviour {
 		questionsCorrect = 0;
 		scoreText.text = "Score: " + score;
 		livesText.text = "Lives: " + lives;
-		qScoreText.text = "Correct: " + questionsCorrect + "/" + totalQuestions;
+		questionsAttemptTxt.text = "Attempted: " + totalQuestions;
+		questionsCorrectTxt.text = "Correct: " + questionsCorrect;
+		questionsLeftTxt.text = "Remaining: " + gameLength;
 		gameOverPanel.SetActive(false);
 		user_id = 0;
 		InputField input = user_id_input.GetComponent<InputField>();
@@ -57,6 +58,7 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	public void UpdateLives() {
+		/*
 		if (lives > 0) {
 			lives--;
 			livesText.text = "Lives: " + lives;
@@ -65,13 +67,18 @@ public class PlayerStats : MonoBehaviour {
 		if (lives <= 0) {
 			EndGame();
 		}
+		*/
 	}
 
 	public void UpdateQuestionsCount(bool correct) {
 		totalQuestions++;
-		if(correct) questionsCorrect++;
-		qScoreText.text = "Correct: " + questionsCorrect + "/" + totalQuestions;
-		if(totalQuestions >= gameLength) EndGame();
+		if (correct) {
+			questionsCorrect++;
+			questionsCorrectTxt.text = "Correct: " + questionsCorrect;
+		}
+		questionsAttemptTxt.text = "Attempted: " + totalQuestions;
+		
+		if (totalQuestions >= gameLength) EndGame();
 	}
 
 	public void OpenQuestion() {

@@ -9,7 +9,7 @@ public class GetGamesData : MonoBehaviour {
 	public List<ScoreObject> scores;
 	public ScoreObject[] sortedScores;
 	leaderBoardHandler handler;
-
+	int iteration;
 	public Text debugtext;
 
 	void Start() {
@@ -28,16 +28,17 @@ public class GetGamesData : MonoBehaviour {
 		scores = new List<ScoreObject>();
 		games = gamesDataText.Split(';');
 		debugtext.text = gamesDataText;
+		Debug.Log(gamesDataText);
 		//Get all scores
 		//getColumn = "score";
-		for (int i = 0; i < games.Length; i++) {
-			if (games[i] != "") {
+		for (int i = 0; i < games.Length-1; i++) {
+			if (games[i] != "" || games[i] == null) {
 				//Add scores and firstname/lastname to list of ScoreObjects
 				ScoreObject obj = new ScoreObject(
-					int.Parse(GetDataValue(games[i], ("id:"))),
+					int.Parse(GetDataValue(games[i], ("GameID:"))),
 					float.Parse(GetDataValue(games[i], ("score:"))),
 					int.Parse(GetDataValue(games[i], ("user_id:"))),
-					GetDataValue(games[i], ("date_complete:")),
+					GetDataValue(games[i], ("Date_complete:")),
 					GetDataValue(games[i], ("first_name:")),
 					GetDataValue(games[i], ("last_name:"))
 					);
@@ -56,6 +57,8 @@ public class GetGamesData : MonoBehaviour {
 		//Take a piece of a string. index is the string it takes in. +Length will take the rest of the string.
 		string value = data.Substring(data.IndexOf(index) + index.Length);
 		if (value.Contains("|")) value = value.Remove(value.IndexOf("|"));
+		iteration++;
+		print(iteration + " " + value);
 		return value;
 	}
 

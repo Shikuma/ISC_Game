@@ -28,6 +28,12 @@ public class TimeController : MonoBehaviour {
 
 	public void PauseMenu() {
 		PauseGame();
-		pausePanel.SetActive(qInProgress ? false : paused);
+		pausePanel.SetActive(!pausePanel.activeSelf);
+		//pausePanel.SetActive(qInProgress ? false : paused);
+	}
+
+	public void Quitting() {
+		qInProgress = false;
+		PauseGame();
 	}
 }

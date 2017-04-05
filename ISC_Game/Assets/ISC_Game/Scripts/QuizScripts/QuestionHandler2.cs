@@ -25,6 +25,7 @@ public class QuestionHandler2 : MonoBehaviour {
 	private bool answerWasCorrect = false;
 
 	public List<QuestionRecord> records;
+	private int currAnswerID;
 
 	// Use this for initialization
 	void Start () {
@@ -151,6 +152,7 @@ public class QuestionHandler2 : MonoBehaviour {
 			if (i == 0) {
 				if (thisAnswer.q_id == currQuestion.q_id) {
 					currAnswers[i] = thisAnswer;
+					currAnswerID = currAnswers[i].a_id;
 					tempAnswerList.RemoveAt(rng);
 				} else {
 					i--;
@@ -215,7 +217,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		}
 
 		//Record incorrect stats
-		QuestionRecord qRecord = new QuestionRecord(currQuestion.q_text, userAnswer, currQuestion.q_id, isCorrect, ps.user_id);
+		QuestionRecord qRecord = new QuestionRecord(currAnswerID, "", isCorrect, ps.user_id, currQuestion.q_id);
 		records.Add(qRecord);
 
 		ps.obstaclesPlayerSuccessfullyJumpedOver = 0;
