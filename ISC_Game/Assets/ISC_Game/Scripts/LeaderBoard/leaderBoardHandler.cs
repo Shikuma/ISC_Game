@@ -12,10 +12,10 @@ public class leaderBoardHandler : MonoBehaviour {
 	GetGamesData ggd;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		ggd = gameObject.GetComponent<GetGamesData>();
 
-		lbObjects = new GameObject[10];	
+		lbObjects = new GameObject[10];
 		objContainer = GameObject.FindWithTag("lbObjectContainer");
 		int i = 0;
 		foreach (Transform child in objContainer.transform) {
@@ -25,14 +25,15 @@ public class leaderBoardHandler : MonoBehaviour {
 
 		//userData = ggd.SortScores();
 	}
-	
+
 
 	public void SetData(ScoreObject[] userData) {
 		this.userData = userData;
 		int j = 0;
-		for(int i = userData.Length-1; i > userData.Length - 4; i--) {
+
+		for (int i = userData.Length - 1; i > userData.Length - (topScores + 1); i--) {
 			//Set name
-			lbObjects[j].gameObject.GetComponent<Text>().text = j+1 + ". " + userData[i].firstName + " " + userData[i].lastName;
+			lbObjects[j].gameObject.GetComponent<Text>().text = j + 1 + ". " + userData[i].firstName + " " + userData[i].lastName;
 			//Set score
 			lbObjects[j].transform.GetChild(0).GetComponent<Text>().text = userData[i].score.ToString();
 			j++;

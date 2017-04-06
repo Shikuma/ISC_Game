@@ -16,7 +16,7 @@ public class GetGamesData : MonoBehaviour {
 		handler = gameObject.GetComponent<leaderBoardHandler>();
 		WWW gamesData = new WWW("http://104.236.217.201/ISC_GetHighScores.php");
 		StartCoroutine(MyCoroutine(gamesData));
-		
+
 		//Change to this when switching to live
 		//WWW gamesData = new WWW("http://104.236.217.201/ISC_GetHighScores.php");
 
@@ -27,11 +27,11 @@ public class GetGamesData : MonoBehaviour {
 		gamesDataText = www.text;
 		scores = new List<ScoreObject>();
 		games = gamesDataText.Split(';');
-		debugtext.text = gamesDataText;
-		Debug.Log(gamesDataText);
+		//debugtext.text = gamesDataText;
+		//Debug.Log(gamesDataText);
 		//Get all scores
 		//getColumn = "score";
-		for (int i = 0; i < games.Length-1; i++) {
+		for (int i = 0; i < games.Length - 1; i++) {
 			if (games[i] != "" || games[i] == null) {
 				//Add scores and firstname/lastname to list of ScoreObjects
 				ScoreObject obj = new ScoreObject(
@@ -46,6 +46,7 @@ public class GetGamesData : MonoBehaviour {
 
 			}
 		}
+		Debug.Log("Finished setting games");
 
 		handler.SetData(SortScores());
 	}
@@ -58,17 +59,17 @@ public class GetGamesData : MonoBehaviour {
 		string value = data.Substring(data.IndexOf(index) + index.Length);
 		if (value.Contains("|")) value = value.Remove(value.IndexOf("|"));
 		iteration++;
-		print(iteration + " " + value);
+		//print(iteration + " " + value);
 		return value;
 	}
 
 	public ScoreObject[] SortScores() {
-		ScoreObject[] sorted = new ScoreObject[scores.Capacity-4];
+		ScoreObject[] sorted = new ScoreObject[scores.Count];
 		//Set sorted array
-		for(int i = 0; i < sorted.Length; i++) {
+		for (int i = 0; i < sorted.Length; i++) {
 			sorted[i] = scores[i];
 		}
-
+		//Sort
 		for (int i = 0; i < sorted.Length; i++) {
 			for (int j = i + 1; j < sorted.Length; j++) {
 				if ((sorted[i].score > sorted[j].score) && (i != j)) {
@@ -78,8 +79,9 @@ public class GetGamesData : MonoBehaviour {
 				}
 			}
 		}
-		print(sorted[11].score);
+		//print(sorted[11].score);
 		sortedScores = sorted;
+		Debug.Log("Finished sorting");
 		return sorted;
 	}
 }
