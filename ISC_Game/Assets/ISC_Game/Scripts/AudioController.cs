@@ -11,7 +11,7 @@ public class AudioController : Singleton<AudioController> {
 
 	// Use this for initialization
 	void Awake () {
-		DontDestroyOnLoad(transform.gameObject);
+		//DontDestroyOnLoad(transform.gameObject);
 		audioSource = GetComponent<AudioSource>();
 	}
 	
