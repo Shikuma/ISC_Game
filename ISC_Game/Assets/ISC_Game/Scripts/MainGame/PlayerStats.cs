@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour {
 	public float score;
 	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, user_id;
-	public GameObject quizPanel, gc, gameOverPanel;
+	public GameObject quizPanel, gc, gameOverPanel, questionOKBtn;
 	public Text scoreText, livesText, gameOverText, GOResponseText, questionsAttemptTxt, questionsCorrectTxt, questionsLeftTxt;
 	public GameObject user_id_input;
 	private string firstName, lastName;
@@ -88,6 +88,7 @@ public class PlayerStats : MonoBehaviour {
 	public void EndGame() {
 		gameOverPanel.SetActive(true);
 		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!";
+		questionOKBtn.SetActive(!tc.qInProgress);
 	}
 
 	public void UpdateUserID() {

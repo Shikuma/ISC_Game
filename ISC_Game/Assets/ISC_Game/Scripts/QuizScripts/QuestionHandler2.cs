@@ -54,7 +54,8 @@ public class QuestionHandler2 : MonoBehaviour {
 				Question obj = new Question(
 					int.Parse(GetDataValue(questions[i], "question_id:")),
 					GetDataValue(questions[i], "question_text:"),
-					GetDataValue(questions[i], "subject:")
+					GetDataValue(questions[i], "subject:"),
+					GetDataValue(questions[i], "response:")
 					);
 				allQData.Add(obj);
 			}
@@ -208,11 +209,14 @@ public class QuestionHandler2 : MonoBehaviour {
 				tc.qInProgress = false;
 			}
 			correctAnswerText.text = "";
+			correctAnswerText.text = currQuestion.responseText;
+			/*
 			for (int i = 0; i < correctAnswers.Count; i++) {
 				if (i > 0) correctAnswerText.text += ", ";
 				correctAnswerText.text += correctAnswers[i];
 				
 			}
+			*/
 			responseText.text = "Incorrect.. Here is/are the correct answer(s):";
 		}
 
