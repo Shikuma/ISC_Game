@@ -9,6 +9,8 @@ public class QuestionHandler2 : MonoBehaviour {
 	public Text[] answersChoices;
 	public GameObject answersPanel, qPanel, qResponsePanel;
 
+	private AudioController AC;
+
 	public List<Question> allQData, usedQuestions;
 	public List<Answer> allAnswers;
 	string[] answers, questions;
@@ -29,6 +31,7 @@ public class QuestionHandler2 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		AC = GameObject.FindWithTag ("AudioCont").GetComponent<AudioController>();
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
 		player = GameObject.FindWithTag("Player");
@@ -189,6 +192,7 @@ public class QuestionHandler2 : MonoBehaviour {
 				if (currAnswers[i].q_id == currQuestion.q_id) {
 					correctAnswerText.text = "";
 					responseText.text = "Correct! Good job!";
+					AC.playSFX (2);
 					ps.obstaclesPlayerSuccessfullyJumpedOver++;
 					answerWasCorrect = true;
 					ps.UpdateScore(25f);
@@ -218,6 +222,7 @@ public class QuestionHandler2 : MonoBehaviour {
 			}
 			*/
 			responseText.text = "Incorrect.. Here is/are the correct answer(s):";
+			AC.playSFX (1);
 		}
 
 		//Record incorrect stats
@@ -228,10 +233,13 @@ public class QuestionHandler2 : MonoBehaviour {
 	}
 
 	public void ContinueQuestion() {
-		qResponsePanel.SetActive(false);
+		qResponsePanel.SetActive (false);
 		tc.qInProgress = false;
-		tc.PauseGame();
-		if(answerWasCorrect)
-			player.GetComponent<Player>().OnJumpInputUp();
+		tc.PauseGame ();
+		if (answerWasCorrect)
+		{
+			player.GetComponent<Player> ().OnJumpInputUp ();
+			AC.playSFX (3);
+		}
 	}
 }
