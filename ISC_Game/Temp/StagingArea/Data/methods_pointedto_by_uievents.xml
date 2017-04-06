@@ -1,0 +1,45 @@
+<linker>
+	<assembly fullname="Assembly-CSharp">
+		<type fullname="AudioController">
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+			<method name="playSFX"/>
+		</type>
+		<type fullname="LoadLevel">
+			<method name="loadLevel"/>
+			<method name="loadLevel"/>
+			<method name="loadLevel"/>
+			<method name="loadLevel"/>
+			<method name="loadLevel"/>
+		</type>
+		<type fullname="QuestionHandler2">
+			<method name="ContinueQuestion"/>
+			<method name="CheckAnswer"/>
+			<method name="CheckAnswer"/>
+			<method name="CheckAnswer"/>
+			<method name="CheckAnswer"/>
+			<method name="CheckAnswer"/>
+			<method name="CheckAnswer"/>
+		</type>
+		<type fullname="TimeController">
+			<method name="PauseMenu"/>
+			<method name="PauseMenu"/>
+			<method name="Quitting"/>
+			<method name="Quitting"/>
+			<method name="PauseGame"/>
+		</type>
+		<type fullname="SubmitGameData">
+			<method name="SetAllTheData"/>
+		</type>
+		<type fullname="PlayerStats">
+			<method name="UpdateUserID"/>
+			<method name="UpdateUserID"/>
+		</type>
+	</assembly>
+</linker>
