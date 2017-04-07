@@ -10,12 +10,14 @@ public class PlayerStats : MonoBehaviour {
 	public Text scoreText, livesText, gameOverText, GOResponseText, questionsAttemptTxt, questionsCorrectTxt, questionsLeftTxt;
 	public GameObject user_id_input;
 	private string firstName, lastName;
+	public bool canSubmit;
 
 	QuestionHandler2 qHandler;
 	TimeController tc;
 
 	// Use this for initialization
 	void Start () {
+		canSubmit = false;
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
 
@@ -93,14 +95,29 @@ public class PlayerStats : MonoBehaviour {
 
 	public void UpdateUserID() {
 		InputField input = user_id_input.GetComponent<InputField>();
-		try {
-			user_id = int.Parse(input.text);
-			GOResponseText.text = "";
-			GOResponseText.color = Color.black;
-		}catch {
-			GOResponseText.text = "Please insert a numerical value";
-			GOResponseText.color = Color.red;
+		Debug.Log("." + input.text + ".");
+		//If left blank, set user id = 0
+		if (input.text == "") {
+			user_id = 0;
+			canSubmit = true;
+			Debug.Log("Setting user_id to 0");
+		}else {
+			//If number then continue
+			try {
+				user_id = int.Parse(input.text);
+				GOResponseText.text = "";
+				GOResponseText.color = Color.black;
+				canSubmit = true;
+
+				//if not a number, don't continue
+			}
+			catch {
+				canSubmit = false;
+				GOResponseText.text = "Please insert a numerical value";
+				GOResponseText.color = Color.red;
+			}
 		}
+
 	}
 }
 

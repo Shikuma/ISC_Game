@@ -14,6 +14,7 @@ public class SubmitGameData : MonoBehaviour {
 
 	private int user_id, game_id;
 	private string first_name, last_name;
+	List<QuestionRecord> qRecords;
 
 	void Start() {
 		game_id = 1;
@@ -24,7 +25,7 @@ public class SubmitGameData : MonoBehaviour {
 		ps = player.GetComponent<PlayerStats>();
 		qHandler = quizObject.GetComponent<QuestionHandler2>();
 		qRecord = quizObject.GetComponent<QuestionRecord>();
-		List<QuestionRecord> qRecords = new List<QuestionRecord>();
+		qRecords = new List<QuestionRecord>();
 		//populate the this.qRecords
 		for(int i = 0; i < qHandler.records.Count; i++) {
 			qRecords.Add(qHandler.records[i]);
@@ -33,51 +34,23 @@ public class SubmitGameData : MonoBehaviour {
 
 		//Send the quesiton records
 		//Call waitForRecords to make sure it didn't fail
-		SendQuestionRecords(qRecords);
-		
-		
-	}
-
-	void SendQuestionRecords(List<QuestionRecord> records) {
-
-		for (int i = 0; i < records.Count; i++) {
-			WWWForm form = new WWWForm();
-			//Set user id and current date
-			records[i].u_id = user_id;
-			records[i].dateComplete = System.DateTime.Now.ToString("yyyy") + "-" + System.DateTime.Now.ToString("MM") + "-" + System.DateTime.Now.ToString("dd");
-			form.AddField("answerIDPost", records[i].answer_id);
-			form.AddField("date_answeredPost", records[i].dateComplete);
-			int correct = records[i].isCorrect ? 1 : 0;
-			form.AddField("isCorrectPost", correct);
-			form.AddField("userIDPost", records[i].u_id);
-			form.AddField("question_idPost", records[i].q_id);
-			//form.AddField("game_idPost", game_id);
-
-			print("QUESTION RECORDS SENDING ==================");
-			print("answerIDPost " + records[i].answer_id);
-			print("date_answeredPost " + records[i].dateComplete);
-			print("isCorrectPost " + correct);
-			print("userIDPost " + records[i].u_id);
-			print("question_idPost " + records[i].q_id);
-			print("game_idPost " + game_id);
-
-			WWW www = new WWW("http://104.236.217.201/ISC_UpdateQuestionRecords.php", form);
-			StartCoroutine( WaitForRecordsRequest(www));
-		}
-	}
-
-	IEnumerator WaitForRecordsRequest(WWW www) {
-		yield return www;
-		if(www.error != null) Debug.Log(www.error);
-		else Debug.Log("Record Request successful");
-
+		//SendQuestionRecords(qRecords);
 		GetUser();
+		
 	}
 
 	//Get user opens WWW, waits for response, then sets first and last name
 	//Then calls SendGameSession
 	//Then calls waitForSessionRequest to make sure it didnt fail
 	void GetUser() {
+		print(user_id);
+		if (!ps.canSubmit) {
+			Debug.Log("User ID is not a number");
+			return;
+		}
+		if (user_id == 0) {
+			user_id = 34;
+		}
 		//Get first name and last name
 		WWWForm form1 = new WWWForm();
 		form1.AddField("user_idPost", user_id);
@@ -94,13 +67,18 @@ public class SubmitGameData : MonoBehaviour {
 		string usersText = www.text;
 		string[] users = usersText.Split(';');
 		print(usersText);
-		for (int i = 0; i < users.Length; i++) {
-			if (users[i] != "") {
-				first_name = GetDataValue(users[i], "first_name:");
-				last_name = GetDataValue(users[i], "last_name:");
+		try {
+			for (int i = 0; i < users.Length; i++) {
+				if (users[i] != "") {
+					first_name = GetDataValue(users[i], "first_name:");
+					last_name = GetDataValue(users[i], "last_name:");
+				}
 			}
+		}catch {
+			responseText.text = "User does not exist.";
+			yield break;
 		}
-
+		submitBtn.SetActive(false);
 		SendGameSession();
 	}
 
@@ -121,7 +99,7 @@ public class SubmitGameData : MonoBehaviour {
 		print("date_completePost" + date);
 		print("f: " + first_name + " - l: " + last_name);
 		*/
-		
+
 		WWW www = new WWW("http://104.236.217.201/ISC_UpdateGameSessions.php", form2);
 		StartCoroutine(WaitForSessionRequest(www));
 	}
@@ -131,7 +109,45 @@ public class SubmitGameData : MonoBehaviour {
 		if (www.error != null) Debug.Log(www.error);
 		else Debug.Log("Session Request successful");
 
-		PostSubmitActions();
+		//PostSubmitActions();
+		SendQuestionRecords();
+	}
+
+	void SendQuestionRecords() {
+
+		for (int i = 0; i < qRecords.Count; i++) {
+			WWWForm form = new WWWForm();
+			//Set user id and current date
+			qRecords[i].u_id = user_id;
+			qRecords[i].dateComplete = System.DateTime.Now.ToString("yyyy") + "-" + System.DateTime.Now.ToString("MM") + "-" + System.DateTime.Now.ToString("dd");
+			form.AddField("answerIDPost", qRecords[i].answer_id);
+			form.AddField("date_answeredPost", qRecords[i].dateComplete);
+			int correct = qRecords[i].isCorrect ? 1 : 0;
+			form.AddField("isCorrectPost", correct);
+			form.AddField("userIDPost", qRecords[i].u_id);
+			form.AddField("question_idPost", qRecords[i].q_id);
+			//form.AddField("game_idPost", game_id);
+
+			print("QUESTION RECORDS SENDING ==================");
+			print("answerIDPost " + qRecords[i].answer_id);
+			print("date_answeredPost " + qRecords[i].dateComplete);
+			print("isCorrectPost " + correct);
+			print("userIDPost " + qRecords[i].u_id);
+			print("question_idPost " + qRecords[i].q_id);
+			print("game_idPost " + game_id);
+
+			WWW www = new WWW("http://104.236.217.201/ISC_UpdateQuestionRecords.php", form);
+			StartCoroutine( WaitForRecordsRequest(www, i == qRecords.Count-1 ? true : false));
+		}
+	}
+
+	IEnumerator WaitForRecordsRequest(WWW www, bool cont) {
+		yield return www;
+		if(www.error != null) Debug.Log(www.error);
+		else Debug.Log("Record Request successful");
+
+		//if (cont)GetUser();
+		if(cont)PostSubmitActions();
 	}
 
 	string GetDataValue(string data, string index) {
@@ -143,7 +159,7 @@ public class SubmitGameData : MonoBehaviour {
 
 	void PostSubmitActions() {
 		idField.SetActive(false);
-		submitBtn.SetActive(false);
+		
 		restartBtn.SetActive(true);
 		responseText.text = "Thank you for submitting. Feel free to play again or quit.";
 	}
