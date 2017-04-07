@@ -92,14 +92,6 @@ public class SubmitGameData : MonoBehaviour {
 		form2.AddField("date_completePost", date);
 		form2.AddField("first_namePost", first_name);
 		form2.AddField("last_namePost", last_name);
-		/*
-		print("GAME SESSION SENDING ==============");
-		print("scorePost"+ ps.score.ToString());
-		print("user_idPost " + user_id);
-		print("date_completePost" + date);
-		print("f: " + first_name + " - l: " + last_name);
-		*/
-
 		WWW www = new WWW("http://104.236.217.201/ISC_UpdateGameSessions.php", form2);
 		StartCoroutine(WaitForSessionRequest(www));
 	}

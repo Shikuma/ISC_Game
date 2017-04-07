@@ -79,6 +79,7 @@ public class PlayerStats : MonoBehaviour {
 			questionsCorrectTxt.text = "Correct: " + questionsCorrect;
 		}
 		questionsAttemptTxt.text = "Attempted: " + totalQuestions;
+		questionsLeftTxt.text = "Remaining: " + (gameLength-totalQuestions);
 		
 		if (totalQuestions >= gameLength) EndGame();
 	}
