@@ -12,6 +12,8 @@ public class PlayerStats : MonoBehaviour {
 	private string firstName, lastName;
 	public bool canSubmit;
 
+	private GameObject flag;
+
 	QuestionHandler2 qHandler;
 	TimeController tc;
 
@@ -20,6 +22,8 @@ public class PlayerStats : MonoBehaviour {
 		canSubmit = false;
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
+		flag = GameObject.FindWithTag ("flag");
+		flag.SetActive (false);
 
 		qHandler =  quizPanel.GetComponent<QuestionHandler2>();
 		score = 0;
@@ -81,7 +85,10 @@ public class PlayerStats : MonoBehaviour {
 		questionsAttemptTxt.text = "Attempted: " + totalQuestions;
 		questionsLeftTxt.text = "Remaining: " + (gameLength-totalQuestions);
 		
-		if (totalQuestions >= gameLength) EndGame();
+		if (totalQuestions >= gameLength) {
+			//EndGame ();
+			StartCoroutine("finishGame");
+		}
 	}
 
 	public void OpenQuestion() {
@@ -92,6 +99,15 @@ public class PlayerStats : MonoBehaviour {
 		gameOverPanel.SetActive(true);
 		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!";
 		questionOKBtn.SetActive(!tc.qInProgress);
+		tc.PauseGame ();
+	}
+
+	IEnumerator finishGame (){
+		// Put a flag in there
+		yield return new WaitForSeconds(.5f);
+		flag.SetActive(true);
+		yield return new WaitForSeconds(1.25f);
+		EndGame ();
 	}
 
 	public void UpdateUserID() {
