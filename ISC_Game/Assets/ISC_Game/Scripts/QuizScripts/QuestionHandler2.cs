@@ -8,7 +8,8 @@ public class QuestionHandler2 : MonoBehaviour {
 	public Text qText, responseText, correctAnswerText;
 	public Text[] answersChoices;
 	public GameObject answersPanel, qPanel, qResponsePanel;
-
+	public Image okayButton;
+	public Sprite redButtonSprite, greenButtonSprite;
 	private AudioController AC;
 
 	public List<Question> allQData, usedQuestions;
@@ -192,6 +193,7 @@ public class QuestionHandler2 : MonoBehaviour {
 				if (currAnswers[i].q_id == currQuestion.q_id) {
 					correctAnswerText.text = "";
 					responseText.text = "Correct! Good job!";
+					okayButton.sprite = greenButtonSprite;
 					AC.playSFX (2);
 					ps.obstaclesPlayerSuccessfullyJumpedOver++;
 					answerWasCorrect = true;
@@ -205,6 +207,7 @@ public class QuestionHandler2 : MonoBehaviour {
 
 		if (!isCorrect) {
 			ps.UpdateScore(-15f);
+			okayButton.sprite = redButtonSprite;
 			answerWasCorrect = false;
 			ps.UpdateQuestionsCount(false);
 			ps.UpdateLives();
