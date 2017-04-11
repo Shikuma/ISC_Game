@@ -244,5 +244,6 @@ public class QuestionHandler2 : MonoBehaviour {
 			player.GetComponent<Player> ().OnJumpInputUp ();
 			AC.playSFX (3);
 		}
+		StartCoroutine (ps.changeBird (answerWasCorrect));
 	}
 }

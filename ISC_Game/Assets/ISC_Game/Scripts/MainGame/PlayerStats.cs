@@ -13,8 +13,8 @@ public class PlayerStats : MonoBehaviour {
 	private string firstName, lastName;
 	public bool canSubmit;
 	public Stopwatch timer;
-	public SpriteRenderer background;
-	public Sprite nightSprite;
+	public SpriteRenderer background, birdSR;
+	public Sprite nightSprite, birdFly, birdTrip, birdNormal;
 
 	private GameObject flag;
 
@@ -28,6 +28,8 @@ public class PlayerStats : MonoBehaviour {
 		tc = gc.GetComponent<TimeController>();
 		flag = GameObject.FindWithTag ("flag");
 		flag.SetActive (false);
+
+		birdSR = GetComponent<SpriteRenderer> ();
 
 		qHandler =  quizPanel.GetComponent<QuestionHandler2>();
 		score = 0;
@@ -67,6 +69,18 @@ public class PlayerStats : MonoBehaviour {
 			//OpenQuestion();
 			print("Time for a question!");
 		}
+	}
+
+	public IEnumerator changeBird(bool right){
+		if (right) {
+			birdSR.sprite = birdFly;
+		} else {
+			birdSR.sprite = birdTrip;
+		}
+
+		yield return new WaitForSeconds (0.6f);
+
+		birdSR.sprite = birdNormal;
 	}
 
 	public void UpdateLives() {
