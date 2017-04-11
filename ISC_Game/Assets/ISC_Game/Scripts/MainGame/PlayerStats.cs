@@ -13,6 +13,8 @@ public class PlayerStats : MonoBehaviour {
 	private string firstName, lastName;
 	public bool canSubmit;
 	public Stopwatch timer;
+	public SpriteRenderer background;
+	public Sprite nightSprite;
 
 	private GameObject flag;
 
@@ -82,6 +84,11 @@ public class PlayerStats : MonoBehaviour {
 
 	public void UpdateQuestionsCount(bool correct) {
 		totalQuestions++;
+
+		if (totalQuestions >= (gameLength/2)) {
+			background.sprite = nightSprite;
+		}
+
 		if (correct) {
 			questionsCorrect++;
 			questionsCorrectTxt.text = "Correct: " + questionsCorrect;
