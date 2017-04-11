@@ -9,12 +9,14 @@ public class TimeController : MonoBehaviour {
 	GameObject player, environmentParent;
 	PlayerInput pi;
 	EnvironmentController ec;
+	PlayerStats ps;
 
 	void Start() {
 		player = GameObject.FindWithTag("Player");
 		environmentParent = GameObject.FindWithTag("EnvParent");
 		pi = player.GetComponent<PlayerInput>();
 		ec = gameObject.GetComponent<EnvironmentController>();
+		ps = player.GetComponent<PlayerStats>();
 		pausePanel.SetActive(false);
 	}
 
@@ -23,12 +25,13 @@ public class TimeController : MonoBehaviour {
 			paused = !paused;
 			Time.timeScale = paused ? 0 : 1;
 		}
-		print ("PauseGame called");
 	}
 
 	public void PauseMenu() {
 		PauseGame();
 		pausePanel.SetActive(!pausePanel.activeSelf);
+		if(paused && ps.timer.IsRunning) ps.timer.Stop();
+		else ps.timer.Start();
 		//pausePanel.SetActive(qInProgress ? false : paused);
 	}
 

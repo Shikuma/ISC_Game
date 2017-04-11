@@ -43,7 +43,6 @@ public class SubmitGameData : MonoBehaviour {
 	//Then calls SendGameSession
 	//Then calls waitForSessionRequest to make sure it didnt fail
 	void GetUser() {
-		print(user_id);
 		if (!ps.canSubmit) {
 			Debug.Log("User ID is not a number");
 			return;
@@ -66,7 +65,6 @@ public class SubmitGameData : MonoBehaviour {
 
 		string usersText = www.text;
 		string[] users = usersText.Split(';');
-		print(usersText);
 		try {
 			for (int i = 0; i < users.Length; i++) {
 				if (users[i] != "") {
@@ -92,6 +90,7 @@ public class SubmitGameData : MonoBehaviour {
 		form2.AddField("date_completePost", date);
 		form2.AddField("first_namePost", first_name);
 		form2.AddField("last_namePost", last_name);
+		form2.AddField("durationPost", ps.secondsToFinish.ToString());
 		WWW www = new WWW("http://104.236.217.201/ISC_UpdateGameSessions.php", form2);
 		StartCoroutine(WaitForSessionRequest(www));
 	}
@@ -120,6 +119,7 @@ public class SubmitGameData : MonoBehaviour {
 			form.AddField("question_idPost", qRecords[i].q_id);
 			//form.AddField("game_idPost", game_id);
 
+			/* DEBUG DIS SHIZ
 			print("QUESTION RECORDS SENDING ==================");
 			print("answerIDPost " + qRecords[i].answer_id);
 			print("date_answeredPost " + qRecords[i].dateComplete);
@@ -127,7 +127,7 @@ public class SubmitGameData : MonoBehaviour {
 			print("userIDPost " + qRecords[i].u_id);
 			print("question_idPost " + qRecords[i].q_id);
 			print("game_idPost " + game_id);
-
+			*/
 			WWW www = new WWW("http://104.236.217.201/ISC_UpdateQuestionRecords.php", form);
 			StartCoroutine( WaitForRecordsRequest(www, i == qRecords.Count-1 ? true : false));
 		}

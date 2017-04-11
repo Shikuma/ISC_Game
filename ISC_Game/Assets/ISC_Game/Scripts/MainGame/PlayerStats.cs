@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 public class PlayerStats : MonoBehaviour {
 	public float score;
-	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, user_id;
+	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, user_id, secondsToFinish;
 	public GameObject quizPanel, gc, gameOverPanel, questionOKBtn;
 	public Text scoreText, livesText, gameOverText, GOResponseText, questionsAttemptTxt, questionsCorrectTxt, questionsLeftTxt;
 	public GameObject user_id_input;
 	private string firstName, lastName;
 	public bool canSubmit;
+	public Stopwatch timer;
 
 	private GameObject flag;
 
@@ -19,7 +21,7 @@ public class PlayerStats : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		canSubmit = false;
+		canSubmit = true;
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
 		flag = GameObject.FindWithTag ("flag");
@@ -41,12 +43,14 @@ public class PlayerStats : MonoBehaviour {
 			user_id = int.Parse(input.text);
 			GOResponseText.text = "Thank you for submitting.";
 		} catch { GOResponseText.text = "Please insert a numerical value"; }
-		Debug.Log(input.text);
+		//Debug.Log(input.text);
+		timer = new Stopwatch();
+		timer.Start();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		//scoreText.text = timer.ElapsedMilliseconds.ToString();
 	}
 
 	public void UpdateScore(float points) {
@@ -96,8 +100,10 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	public void EndGame() {
+		if(timer.IsRunning) timer.Stop();
+		secondsToFinish = (int)timer.ElapsedMilliseconds / 1000;
 		gameOverPanel.SetActive(true);
-		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!";
+		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!\n" + "You completed the game in " + secondsToFinish + " seconds!";
 		questionOKBtn.SetActive(!tc.qInProgress);
 		tc.PauseGame ();
 	}
@@ -112,23 +118,19 @@ public class PlayerStats : MonoBehaviour {
 
 	public void UpdateUserID() {
 		InputField input = user_id_input.GetComponent<InputField>();
-		Debug.Log("." + input.text + ".");
 		//If left blank, set user id = 0
 		if (input.text == "") {
 			user_id = 0;
-			canSubmit = true;
-			Debug.Log("Setting user_id to 0");
+			//Debug.Log("Setting user_id to 0");
 		}else {
 			//If number then continue
 			try {
 				user_id = int.Parse(input.text);
 				GOResponseText.text = "";
 				GOResponseText.color = Color.black;
-				canSubmit = true;
 
-				//if not a number, don't continue
-			}
-			catch {
+			//if not a number, don't continue
+			}catch {
 				canSubmit = false;
 				GOResponseText.text = "Please insert a numerical value";
 				GOResponseText.color = Color.red;
