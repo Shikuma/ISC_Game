@@ -15,6 +15,7 @@ public class PlayerStats : MonoBehaviour {
 	public Stopwatch timer;
 	public SpriteRenderer background, birdSR;
 	public Sprite nightSprite, birdFly, birdTrip, birdNormal;
+	public Slider progressSlider;
 
 	private GameObject flag;
 
@@ -28,6 +29,10 @@ public class PlayerStats : MonoBehaviour {
 		tc = gc.GetComponent<TimeController>();
 		flag = GameObject.FindWithTag ("flag");
 		flag.SetActive (false);
+
+		progressSlider.minValue = 0;
+		progressSlider.maxValue = gameLength;
+		progressSlider.wholeNumbers = true;
 
 		birdSR = GetComponent<SpriteRenderer> ();
 
@@ -98,6 +103,7 @@ public class PlayerStats : MonoBehaviour {
 
 	public void UpdateQuestionsCount(bool correct) {
 		totalQuestions++;
+		progressSlider.value = totalQuestions;
 
 		if (totalQuestions >= (gameLength/2)) {
 			background.sprite = nightSprite;
