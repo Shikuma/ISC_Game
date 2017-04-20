@@ -18,7 +18,7 @@ public class QuestionHandler2 : MonoBehaviour {
 	string answersDataText, questionsDataText;
 	private Question currQuestion;
 	private Answer[] currAnswers;
-	private List<string> correctAnswers;
+	private List<Answer> correctAnswers;
 	WWW questionsData, answersData;
 
 	private GameObject gc, player;
@@ -78,7 +78,8 @@ public class QuestionHandler2 : MonoBehaviour {
 				Answer obj = new Answer(
 					int.Parse(GetDataValue(answers[i], "answer_id:")),
 					GetDataValue(answers[i], "answer_text:"),
-					int.Parse(GetDataValue(answers[i], "question_id:"))
+					int.Parse(GetDataValue(answers[i], "question_id:")),
+					GetDataValue(answers[i], "type:")
 					);
 				
 				allAnswers.Add(obj);
@@ -143,7 +144,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		currAnswers = new Answer[answersChoices.Length];
 		Answer thisAnswer;
 		List<Answer> tempAnswerList = new List<Answer>();
-		correctAnswers = new List<string>();
+		correctAnswers = new List<Answer>();
 		//Set tempAnswerList
 		for (int i = 0; i < allAnswers.Count; i++) {
 			tempAnswerList.Add(allAnswers[i]);
@@ -159,15 +160,19 @@ public class QuestionHandler2 : MonoBehaviour {
 					currAnswers[i] = thisAnswer;
 					currAnswerID = currAnswers[i].a_id;
 					tempAnswerList.RemoveAt(rng);
+					correctAnswers.Add(thisAnswer);
 				} else {
 					i--;
 					continue;
 				}
-			}else {
+			}else if(thisAnswer.a_type == correctAnswers[0].a_type){
 				currAnswers[i] = thisAnswer;
 				tempAnswerList.RemoveAt(rng);
+				if (thisAnswer.q_id == currQuestion.q_id) correctAnswers.Add(thisAnswer);
+			}else {
+				i--;
+				continue;
 			}
-			if(thisAnswer.q_id == currQuestion.q_id) correctAnswers.Add(thisAnswer.a_text);
 		}
 		//Shuffle currAnswers
 		for(int i = 0; i < currAnswers.Length; i++) {
@@ -179,6 +184,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		//Output currAnswers in sequential order
 		for(int i = 0; i < answersChoices.Length; i++) {
 			answersChoices[i].text = currAnswers[i].a_text;
+			print(currAnswers[i].a_text + " -- " + currAnswers[i].a_type);
 		}
 	}
 
