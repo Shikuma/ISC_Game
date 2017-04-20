@@ -74,6 +74,7 @@ public class SubmitGameData : MonoBehaviour {
 			}
 		}catch {
 			responseText.text = "User does not exist.";
+			responseText.color = Color.red;
 			yield break;
 		}
 		submitBtn.SetActive(false);
@@ -153,6 +154,7 @@ public class SubmitGameData : MonoBehaviour {
 		idField.SetActive(false);
 		
 		restartBtn.SetActive(true);
+		responseText.color = new Color32(26, 188, 110, 255);
 		responseText.text = "Thank you for submitting. Feel free to play again or quit.";
 	}
 }

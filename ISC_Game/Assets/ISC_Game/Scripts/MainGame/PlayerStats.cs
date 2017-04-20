@@ -48,10 +48,6 @@ public class PlayerStats : MonoBehaviour {
 		gameOverPanel.SetActive(false);
 		user_id = 0;
 		InputField input = user_id_input.GetComponent<InputField>();
-		try {
-			user_id = int.Parse(input.text);
-			GOResponseText.text = "Thank you for submitting.";
-		} catch { GOResponseText.text = "Please insert a numerical value"; }
 		//Debug.Log(input.text);
 		timer = new Stopwatch();
 		timer.Start();
@@ -148,19 +144,22 @@ public class PlayerStats : MonoBehaviour {
 		//If left blank, set user id = 0
 		if (input.text == "") {
 			user_id = 0;
+			canSubmit = true;
 			//Debug.Log("Setting user_id to 0");
 		}else {
 			//If number then continue
 			try {
 				user_id = int.Parse(input.text);
-				GOResponseText.text = "";
 				GOResponseText.color = Color.black;
+				GOResponseText.text = "";
+				canSubmit = true;
 
 			//if not a number, don't continue
 			}catch {
 				canSubmit = false;
-				GOResponseText.text = "Please insert a numerical value";
 				GOResponseText.color = Color.red;
+				GOResponseText.text = "Please insert a numerical value";
+				
 			}
 		}
 
