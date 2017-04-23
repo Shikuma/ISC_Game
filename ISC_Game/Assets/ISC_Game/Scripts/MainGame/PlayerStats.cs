@@ -31,7 +31,7 @@ public class PlayerStats : MonoBehaviour {
 		flag.SetActive (false);
 
 		progressSlider.minValue = 0;
-		progressSlider.maxValue = gameLength;
+		progressSlider.maxValue = gameLength-1;
 		progressSlider.wholeNumbers = true;
 
 		birdSR = GetComponent<SpriteRenderer> ();
@@ -99,7 +99,7 @@ public class PlayerStats : MonoBehaviour {
 
 	public void UpdateQuestionsCount(bool correct) {
 		totalQuestions++;
-		progressSlider.value = totalQuestions;
+		progressSlider.value = totalQuestions-1;
 
 		if (totalQuestions >= (gameLength/2)) {
 			background.sprite = nightSprite;

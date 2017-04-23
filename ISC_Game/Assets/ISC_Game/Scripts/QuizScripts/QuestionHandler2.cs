@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class QuestionHandler2 : MonoBehaviour {
 	public Text qText, responseText, correctAnswerText;
 	public Text[] answersChoices;
-	public GameObject answersPanel, qPanel, qResponsePanel;
+	public GameObject answersPanel, qPanel, qResponsePanel, secondChancePanel;
 	public Image okayButton;
 	public Sprite redButtonSprite, greenButtonSprite;
 	private AudioController AC;
@@ -24,8 +24,9 @@ public class QuestionHandler2 : MonoBehaviour {
 	private GameObject gc, player;
 	private TimeController tc;
 	private PlayerStats ps;
+	private ProgressBar progress;
 
-	private bool answerWasCorrect = false;
+	private bool answerWasCorrect = false, attempted = false;
 
 	public List<QuestionRecord> records;
 	private int currAnswerID;
@@ -37,11 +38,13 @@ public class QuestionHandler2 : MonoBehaviour {
 		tc = gc.GetComponent<TimeController>();
 		player = GameObject.FindWithTag("Player");
 		ps = player.GetComponent<PlayerStats>();
+		progress = gc.GetComponent<ProgressBar>();
 		records = new List<QuestionRecord>();
 
 		qPanel.SetActive(false);
 		answersPanel.SetActive(false);
 		qResponsePanel.SetActive(false);
+		secondChancePanel.SetActive(false);
 
 		questionsData = new WWW("http://104.236.217.201/ISC_GetQuestions.php");
 		answersData = new WWW("http://104.236.217.201/ISC_GetAnswers.php");
@@ -191,47 +194,40 @@ public class QuestionHandler2 : MonoBehaviour {
 	public void CheckAnswer() {
 		qPanel.SetActive(false);
 		answersPanel.SetActive(false);
-		qResponsePanel.SetActive(true);
+		
 		bool isCorrect = false;
 		string userAnswer = EventSystem.current.currentSelectedGameObject.gameObject.transform.GetChild(0).GetComponent<Text>().text;
+		//Check if the given answer was correct
 		for (int i = 0; i < currAnswers.Length; i++) {
 			if (EventSystem.current.currentSelectedGameObject.gameObject.transform.GetChild(0).GetComponent<Text>().text == currAnswers[i].a_text) {
 				if (currAnswers[i].q_id == currQuestion.q_id) {
-					correctAnswerText.text = "";
-					responseText.text = "Correct! Good job!";
-					okayButton.sprite = greenButtonSprite;
-					AC.playSFX (2);
-					ps.obstaclesPlayerSuccessfullyJumpedOver++;
 					answerWasCorrect = true;
-					ps.UpdateScore(25f);
-					ps.UpdateQuestionsCount(true);
 					isCorrect = true;
 					break;
 				}
 			}
 		}
 
-		if (!isCorrect) {
-			ps.UpdateScore(-15f);
-			okayButton.sprite = redButtonSprite;
-			answerWasCorrect = false;
-			ps.UpdateQuestionsCount(false);
-			ps.UpdateLives();
-			if (ps.lives <= 0) {
-				qResponsePanel.SetActive(false);
-				tc.qInProgress = false;
-			}
+		if (isCorrect) {
+			qResponsePanel.SetActive(true);
 			correctAnswerText.text = "";
-			correctAnswerText.text = currQuestion.responseText;
-			/*
-			for (int i = 0; i < correctAnswers.Count; i++) {
-				if (i > 0) correctAnswerText.text += ", ";
-				correctAnswerText.text += correctAnswers[i];
-				
+			responseText.text = "Correct! Good job!";
+			okayButton.sprite = greenButtonSprite;
+			AC.playSFX(2);
+			ps.obstaclesPlayerSuccessfullyJumpedOver++;
+			if(!attempted) ps.UpdateScore(25f);
+			ps.UpdateQuestionsCount(true);
+			progress.UpdateStatus(true);
+		}else {
+			AC.playSFX(1);
+			if (attempted) {
+				DisplayIncorrectResponse();
 			}
-			*/
-			responseText.text = "Incorrect.. Here is/are the correct answer(s):";
-			AC.playSFX (1);
+			else {
+				ps.UpdateScore(-15f);
+				secondChancePanel.SetActive(true);
+				attempted = true;
+			}
 		}
 
 		//Record incorrect stats
@@ -241,8 +237,28 @@ public class QuestionHandler2 : MonoBehaviour {
 		ps.obstaclesPlayerSuccessfullyJumpedOver = 0;
 	}
 
+	public void DisplayIncorrectResponse() {
+		qResponsePanel.SetActive(true);
+		if(secondChancePanel.activeSelf) secondChancePanel.SetActive(false);
+		okayButton.sprite = redButtonSprite;
+		answerWasCorrect = false;
+		ps.UpdateQuestionsCount(false);
+		ps.UpdateLives();
+		correctAnswerText.text = "";
+		correctAnswerText.text = currQuestion.responseText;
+		responseText.text = "Incorrect.. Here is/are the correct answer(s):";
+		progress.UpdateStatus(false);
+	}
+
+	public void DisplayQuiz() {
+		qPanel.SetActive(true);
+		answersPanel.SetActive(true);
+		secondChancePanel.SetActive(false);
+	}
+
 	public void ContinueQuestion() {
 		qResponsePanel.SetActive (false);
+		attempted = false;
 		tc.qInProgress = false;
 		tc.PauseGame ();
 		if (answerWasCorrect)
