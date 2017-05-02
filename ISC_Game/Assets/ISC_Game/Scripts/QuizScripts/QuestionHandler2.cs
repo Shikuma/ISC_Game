@@ -189,7 +189,6 @@ public class QuestionHandler2 : MonoBehaviour {
 		//Output currAnswers in sequential order
 		for(int i = 0; i < answersChoices.Length; i++) {
 			answersChoices[i].text = currAnswers[i].a_text;
-			print(currAnswers[i].a_text + " -- " + currAnswers[i].a_type);
 		}
 	}
 

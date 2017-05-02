@@ -18,26 +18,23 @@ public class UserIdentification : MonoBehaviour {
 		user_id = 0;
 		submitResponse.text = "If you would like to submit your results, press \"submit\" bellow.";
 		idInput.SetActive(false);
-
-		//Test split
-		string url2 = "http://104.236.217.201/agileproject/games/game/27";
-		int id2 = int.Parse(url2.Substring(url2.IndexOf(index) + index.Length));
-		Debug.Log(id2);
 	}
 
 	public void TryFetchID() {
 		try {
-			if (Application.isWebPlayer) {
+			//if (Application.isWebPlayer) {
 				string url = Application.absoluteURL;
 				user_id = int.Parse(url.Substring(url.IndexOf(index) + index.Length));
 				canSubmit = true;
 				submitBtn.SetActive(true);
-			}
+			//}
+			Debug.Log("Successfully Fetched User ID. " + user_id);
 		}
 		catch {
 			//can't get id, do this
 			idInput.SetActive(true);
 			submitResponse.text += "\n ** Please input your ID below. **";
+			Debug.Log("Failed to fetch user ID.");
 		}
 	}
 	

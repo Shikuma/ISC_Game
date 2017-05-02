@@ -41,7 +41,6 @@ public class EnvironmentController : MonoBehaviour {
 		//Set the ground collider position and size
 		Vector2 newScale = new Vector2(screenSize.x / walkingSurface.gameObject.GetComponent<BoxCollider2D>().bounds.size.x, walkingSurface.transform.localScale.y);
 		Vector2 newPos = new Vector2(screenSize.x/2f, (3*screenSize.y/5) - (walkingSurface.gameObject.GetComponent<BoxCollider2D>().bounds.size.y / 2));
-		print(newScale + " :: " + newPos);
 		walkingSurface.transform.localScale = newScale;
 		walkingSurface.transform.position = newPos;
 	}
