@@ -30,16 +30,14 @@ public class UserIdentification : MonoBehaviour {
 			if (Application.isWebPlayer) {
 				string url = Application.absoluteURL;
 				user_id = int.Parse(url.Substring(url.IndexOf(index) + index.Length));
+				canSubmit = true;
 				submitBtn.SetActive(true);
-				GOResponseText.text = "user id: " + user_id;
-				Debug.Log(user_id);
 			}
 		}
 		catch {
 			//can't get id, do this
 			idInput.SetActive(true);
 			submitResponse.text += "\n ** Please input your ID below. **";
-			GOResponseText.text = "Could not fetch ID -- Remove me on final build";
 		}
 	}
 	
