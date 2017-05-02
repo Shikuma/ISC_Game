@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SubmitGameData : MonoBehaviour {
-	public GameObject player, quizObject;
-	public GameObject idField, submitBtn, restartBtn;
+	public GameObject player, quizObject, idField, submitBtn, restartBtn, gc;
 	public Text responseText;
 	
 	private PlayerStats ps;
@@ -16,12 +15,15 @@ public class SubmitGameData : MonoBehaviour {
 	private string first_name, last_name;
 	List<QuestionRecord> qRecords;
 
+	UserIdentification uid;
+
 	void Start() {
 		game_id = 1;
 		restartBtn.SetActive(false);
 	}
 
 	public void SetAllTheData() {
+		uid = GetComponent<UserIdentification>();
 		ps = player.GetComponent<PlayerStats>();
 		qHandler = quizObject.GetComponent<QuestionHandler2>();
 		qRecord = quizObject.GetComponent<QuestionRecord>();
@@ -30,7 +32,7 @@ public class SubmitGameData : MonoBehaviour {
 		for(int i = 0; i < qHandler.records.Count; i++) {
 			qRecords.Add(qHandler.records[i]);
 		}
-		user_id = ps.user_id;
+		user_id = uid.user_id;
 
 		//Send the quesiton records
 		//Call waitForRecords to make sure it didn't fail
@@ -43,7 +45,7 @@ public class SubmitGameData : MonoBehaviour {
 	//Then calls SendGameSession
 	//Then calls waitForSessionRequest to make sure it didnt fail
 	void GetUser() {
-		if (!ps.canSubmit) {
+		if (!uid.canSubmit) {
 			Debug.Log("User ID is not a number");
 			return;
 		}

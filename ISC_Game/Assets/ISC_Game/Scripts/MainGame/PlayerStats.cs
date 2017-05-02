@@ -6,12 +6,10 @@ using System.Diagnostics;
 
 public class PlayerStats : MonoBehaviour {
 	public float score;
-	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, user_id, secondsToFinish;
+	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, secondsToFinish;
 	public GameObject quizPanel, gc, gameOverPanel, questionOKBtn;
 	public Text scoreText, livesText, gameOverText, GOResponseText, questionsAttemptTxt, questionsCorrectTxt, questionsLeftTxt;
-	public GameObject user_id_input;
 	private string firstName, lastName;
-	public bool canSubmit;
 	public Stopwatch timer;
 	public SpriteRenderer background, birdSR;
 	public Sprite nightSprite, birdFly, birdTrip, birdNormal;
@@ -21,14 +19,15 @@ public class PlayerStats : MonoBehaviour {
 
 	QuestionHandler2 qHandler;
 	TimeController tc;
+	UserIdentification uid;
 
 	// Use this for initialization
 	void Start () {
-		canSubmit = true;
 		gc = GameObject.FindWithTag("GameController");
 		tc = gc.GetComponent<TimeController>();
 		flag = GameObject.FindWithTag ("flag");
 		flag.SetActive (false);
+		uid = gc.GetComponent<UserIdentification>();
 
 		progressSlider.minValue = 0;
 		progressSlider.maxValue = gameLength-1;
@@ -46,8 +45,6 @@ public class PlayerStats : MonoBehaviour {
 		questionsCorrectTxt.text = "Correct: " + questionsCorrect;
 		questionsLeftTxt.text = "Remaining: " + gameLength;
 		gameOverPanel.SetActive(false);
-		user_id = 0;
-		InputField input = user_id_input.GetComponent<InputField>();
 		//Debug.Log(input.text);
 		timer = new Stopwatch();
 		timer.Start();
@@ -128,6 +125,7 @@ public class PlayerStats : MonoBehaviour {
 		gameOverPanel.SetActive(true);
 		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!\n" + "You completed the game in " + secondsToFinish + " seconds!";
 		questionOKBtn.SetActive(!tc.qInProgress);
+		uid.TryFetchID();
 		tc.PauseGame ();
 	}
 
@@ -137,32 +135,6 @@ public class PlayerStats : MonoBehaviour {
 		flag.SetActive(true);
 		yield return new WaitForSeconds(1.25f);
 		EndGame ();
-	}
-
-	public void UpdateUserID() {
-		InputField input = user_id_input.GetComponent<InputField>();
-		//If left blank, set user id = 0
-		if (input.text == "") {
-			user_id = 0;
-			canSubmit = true;
-			//Debug.Log("Setting user_id to 0");
-		}else {
-			//If number then continue
-			try {
-				user_id = int.Parse(input.text);
-				GOResponseText.color = Color.black;
-				GOResponseText.text = "";
-				canSubmit = true;
-
-			//if not a number, don't continue
-			}catch {
-				canSubmit = false;
-				GOResponseText.color = Color.red;
-				GOResponseText.text = "Please insert a numerical value";
-				
-			}
-		}
-
 	}
 }
 

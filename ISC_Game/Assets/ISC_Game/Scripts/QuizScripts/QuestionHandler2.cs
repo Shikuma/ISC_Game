@@ -25,6 +25,7 @@ public class QuestionHandler2 : MonoBehaviour {
 	private TimeController tc;
 	private PlayerStats ps;
 	private ProgressBar progress;
+	private UserIdentification uid;
 
 	private bool answerWasCorrect = false, attempted = false;
 
@@ -40,6 +41,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		ps = player.GetComponent<PlayerStats>();
 		progress = gc.GetComponent<ProgressBar>();
 		records = new List<QuestionRecord>();
+		uid = gc.GetComponent<UserIdentification>();
 
 		qPanel.SetActive(false);
 		answersPanel.SetActive(false);
@@ -231,7 +233,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		}
 
 		//Record incorrect stats
-		QuestionRecord qRecord = new QuestionRecord(currAnswerID, "", isCorrect, ps.user_id, currQuestion.q_id);
+		QuestionRecord qRecord = new QuestionRecord(currAnswerID, "", isCorrect, uid.user_id, currQuestion.q_id);
 		records.Add(qRecord);
 
 		ps.obstaclesPlayerSuccessfullyJumpedOver = 0;

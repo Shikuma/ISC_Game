@@ -43,9 +43,6 @@ public class ProgressBar : MonoBehaviour {
 			x++;
 		}
 		
-		
-
-
 	}
 
 	public void UpdateStatus(bool correct) {
