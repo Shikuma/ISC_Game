@@ -11,8 +11,8 @@ public class PlayerStats : MonoBehaviour {
 	public Text scoreText, livesText, gameOverText, GOResponseText, questionsAttemptTxt, questionsCorrectTxt, questionsLeftTxt;
 	private string firstName, lastName;
 	public Stopwatch timer;
-	public SpriteRenderer background, birdSR;
-	public Sprite nightSprite, birdFly, birdTrip, birdNormal;
+	public SpriteRenderer background, birdSR, mountains;
+	public Sprite nightSprite, birdFly, birdTrip, birdNormal, mountainsNight;
 	public Slider progressSlider;
 
 	private GameObject flag;
@@ -100,6 +100,7 @@ public class PlayerStats : MonoBehaviour {
 
 		if (totalQuestions >= (gameLength/2)) {
 			background.sprite = nightSprite;
+			mountains.sprite = mountainsNight;
 		}
 
 		if (correct) {
