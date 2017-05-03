@@ -56,7 +56,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		answersData = new WWW("http://104.236.217.201/ISC_GetAnswers.php");
 		StartCoroutine(GetQuestions(questionsData, answersData));
 
-		StartCoroutine(QuestionTimer(3f));
+		
 	}
 
 	private IEnumerator GetQuestions(WWW questions_www, WWW answers_www) {
@@ -111,6 +111,8 @@ public class QuestionHandler2 : MonoBehaviour {
 		allAnswers.Add(obj6);
 		*/
 		RandomizeQuestions();
+		//Start the question timer after all questions and answers are loaded to prevent failure
+		StartCoroutine(QuestionTimer(3f));
 	}
 
 	string GetDataValue(string data, string index) {
