@@ -26,8 +26,10 @@ public class QuestionHandler2 : MonoBehaviour {
 	private PlayerStats ps;
 	private ProgressBar progress;
 	private UserIdentification uid;
+	private EnvironmentController ec;
+	private PlayerController pc;
 
-	private bool answerWasCorrect = false, attempted = false;
+	public bool answerWasCorrect = false, attempted = false;
 
 	public List<QuestionRecord> records;
 	private int currAnswerID;
@@ -42,6 +44,8 @@ public class QuestionHandler2 : MonoBehaviour {
 		progress = gc.GetComponent<ProgressBar>();
 		records = new List<QuestionRecord>();
 		uid = gc.GetComponent<UserIdentification>();
+		ec = gc.GetComponent<EnvironmentController>();
+		pc = player.GetComponent<PlayerController>();
 
 		qPanel.SetActive(false);
 		answersPanel.SetActive(false);
@@ -52,6 +56,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		answersData = new WWW("http://104.236.217.201/ISC_GetAnswers.php");
 		StartCoroutine(GetQuestions(questionsData, answersData));
 
+		StartCoroutine(QuestionTimer(3f));
 	}
 
 	private IEnumerator GetQuestions(WWW questions_www, WWW answers_www) {
@@ -132,7 +137,7 @@ public class QuestionHandler2 : MonoBehaviour {
 		}
 
 		//Pause game and set UI
-		tc.PauseGame();
+		//tc.PauseGame();
 		tc.qInProgress = true;
 		qPanel.SetActive(true);
 		answersPanel.SetActive(true);
@@ -261,12 +266,22 @@ public class QuestionHandler2 : MonoBehaviour {
 		qResponsePanel.SetActive (false);
 		attempted = false;
 		tc.qInProgress = false;
-		tc.PauseGame ();
+		//tc.PauseGame ();
+		/*
 		if (answerWasCorrect)
 		{
 			player.GetComponent<Player> ().OnJumpInputUp ();
 			AC.playSFX (3);
 		}
 		StartCoroutine (ps.changeBird (answerWasCorrect));
+		*/
+		//StartCoroutine(ec.ObstacleSpawnTimer(5f));
+		ec.ObstacleSpawn();
+	}
+
+	public IEnumerator QuestionTimer(float delay) {
+		yield return new WaitForSeconds(delay);
+		pc.canTrigger = true;
+		GetRandomQuestion();
 	}
 }

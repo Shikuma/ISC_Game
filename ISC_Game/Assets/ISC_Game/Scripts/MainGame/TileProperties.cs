@@ -7,7 +7,7 @@ public class TileProperties : MonoBehaviour {
 	[SerializeField]
 	public Sprite[] pieces, obstacles;
 	public GameObject piece, obstacle, obstacleTrigger;
-	public bool hasObstacle, dealtPoints;
+	public bool hasObstacle, dealtPoints, lastTile;
 	private float poolEnd, poolStart;
 	public int thisElement;
 	private GameObject player;
@@ -24,6 +24,7 @@ public class TileProperties : MonoBehaviour {
 		poolStart = ec.screenSize.x + 5f;
 		poolEnd = -5f;
 		dealtPoints = false;
+		lastTile = false;
 	}
 
 	void Update() {
@@ -34,9 +35,8 @@ public class TileProperties : MonoBehaviour {
 	
 
 	public void SetChildren() {
-		Vector2 newPos;
 		piece.gameObject.GetComponent<SpriteRenderer>().sprite = pieces[Random.Range(0, pieces.Length)];
-
+		/*
 		//Determine if any of the recent tiles have had an obstacle, if so, don't generate one.
 		if (Random.Range(0, 10) < 3) {
 			bool canObstacle = true;
@@ -61,7 +61,7 @@ public class TileProperties : MonoBehaviour {
 				obstacle.GetComponent<BoxCollider2D>().size = obstacle.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size;
 			}
 
-		}
+		}*/
 	}
 
 	public void initSpawn() {
@@ -75,11 +75,16 @@ public class TileProperties : MonoBehaviour {
 	public void ResetPosition() {
 		hasObstacle = false;
 		dealtPoints = false;
+		lastTile = true;
+		
 		obstacle.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
 		int previousChild = thisElement;
 		if (thisElement == 0) previousChild = ec.tiles.Capacity-3; 
-		else previousChild--; 
+		else previousChild--;
+
+		ec.tiles[previousChild].gameObject.GetComponent<TileProperties>().lastTile = false;
+
 
 		transform.position = ec.tiles[previousChild].gameObject.transform.position;
 		Vector2 newPos = transform.position;
@@ -97,6 +102,20 @@ public class TileProperties : MonoBehaviour {
 				dealtPoints = true;
 			}
 		}
+	}
+
+	public void SpawnObstacle() {
+		Vector2 newPos;
+
+		hasObstacle = true;
+		obstacle.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+		obstacle.gameObject.GetComponent<SpriteRenderer>().sprite = obstacles[Random.Range(0, obstacles.Length)];
+
+		newPos = transform.position;
+		newPos.y += obstacle.gameObject.GetComponent<SpriteRenderer>().bounds.size.y / 2;
+		obstacle.transform.position = newPos;
+
+		obstacle.GetComponent<BoxCollider2D>().size = obstacle.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.size;
 	}
 
 }

@@ -20,6 +20,7 @@ public class EnvironmentController : MonoBehaviour {
 		SetCamera();
 		SetGroundCollider();
 		CreateEnvironment();
+		//StartCoroutine(ObstacleSpawnTimer(5f));
 	}
 	
 	void Update () {
@@ -37,7 +38,6 @@ public class EnvironmentController : MonoBehaviour {
 
 	void SetGroundCollider() {
 		GameObject walkingSurface = Instantiate(walkingSurfacePrefab, Vector3.zero, Quaternion.identity);
-
 		//Set the ground collider position and size
 		Vector2 newScale = new Vector2(screenSize.x / walkingSurface.gameObject.GetComponent<BoxCollider2D>().bounds.size.x, walkingSurface.transform.localScale.y);
 		Vector2 newPos = new Vector2(screenSize.x/2f, (3*screenSize.y/5) - (walkingSurface.gameObject.GetComponent<BoxCollider2D>().bounds.size.y / 2));
@@ -55,6 +55,19 @@ public class EnvironmentController : MonoBehaviour {
 			go.gameObject.GetComponent<TileProperties>().initSpawn();
 			go.transform.position = tilePos;
 			tilePos.x += go.gameObject.GetComponent<TileProperties>().piece.gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
+		}
+	}
+
+	public IEnumerator ObstacleSpawnTimer(float delay) {
+		yield return new WaitForSeconds(delay);
+		ObstacleSpawn();
+	}
+
+	public void ObstacleSpawn() {
+		print("Spawning obstacle");
+		for (int i = 0; i < tiles.Count; i++) {
+			if (tiles[i].gameObject.GetComponent<TileProperties>().lastTile)
+				tiles[i].gameObject.GetComponent<TileProperties>().SpawnObstacle();
 		}
 	}
 }

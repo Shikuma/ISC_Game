@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimeController : MonoBehaviour {
 	public bool paused, pseudoPaused, qInProgress;
-	public GameObject pausePanel;
+	public GameObject pausePanel, quizPanel;
 
 	GameObject player, environmentParent;
 	PlayerInput pi;
@@ -21,10 +21,9 @@ public class TimeController : MonoBehaviour {
 	}
 
 	public void PauseGame() {
-		if (!qInProgress) {
-			paused = !paused;
-			Time.timeScale = paused ? 0 : 1;
-		}
+		paused = !paused;
+		Time.timeScale = paused ? 0 : 1;
+		
 	}
 
 	public void PauseMenu() {
@@ -33,6 +32,9 @@ public class TimeController : MonoBehaviour {
 		if(paused && ps.timer.IsRunning) ps.timer.Stop();
 		else ps.timer.Start();
 		//pausePanel.SetActive(qInProgress ? false : paused);
+		if (qInProgress) {
+			quizPanel.SetActive(!paused);
+		}
 	}
 
 	public void Quitting() {
