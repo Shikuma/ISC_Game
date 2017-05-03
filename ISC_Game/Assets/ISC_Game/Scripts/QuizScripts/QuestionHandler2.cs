@@ -95,21 +95,12 @@ public class QuestionHandler2 : MonoBehaviour {
 				allAnswers.Add(obj);
 			}
 		}
-		/*
-		Answer obj = new Answer(1, "A", 1);
-		Answer obj2 = new Answer(1, "B", 0);
-		Answer obj3 = new Answer(1, "C", 0);
-		Answer obj4 = new Answer(1, "D", 0);
-		Answer obj5 = new Answer(1, "E", 0);
-		Answer obj6 = new Answer(1, "F", 0);
 
-		allAnswers.Add(obj);
-		allAnswers.Add(obj2);
-		allAnswers.Add(obj3);
-		allAnswers.Add(obj4);
-		allAnswers.Add(obj5);
-		allAnswers.Add(obj6);
-		*/
+		/*Output all the answers
+		for(int i = 0; i < allAnswers.Count; i++){
+			print("ID: " + allAnswers[i].a_id + " -- answer: " + allAnswers[i].a_text + " -- q_ID: " + allAnswers[i].q_id + " -- Type: " + allAnswers[i].a_type);
+		}*/
+
 		RandomizeQuestions();
 		//Start the question timer after all questions and answers are loaded to prevent failure
 		StartCoroutine(QuestionTimer(3f));
@@ -128,6 +119,9 @@ public class QuestionHandler2 : MonoBehaviour {
 			int r = Random.Range(i, allQData.Count);
 			allQData[i] = allQData[r];
 			allQData[r] = tmp;
+			/*Output all the questions 
+			print("ID: " + allQData[i].q_id + " -- Question: " + allQData[i].q_text + " -- subject: " + allQData[i].subject + " -- response: " + allQData[i].responseText);
+			*/
 		}
 	}
 
