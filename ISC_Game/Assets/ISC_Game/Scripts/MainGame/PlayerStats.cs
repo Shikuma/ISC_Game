@@ -7,7 +7,7 @@ using System.Diagnostics;
 public class PlayerStats : MonoBehaviour {
 	public float score;
 	public int lives, qScore, obstaclesPlayerSuccessfullyJumpedOver, totalQuestions, questionsCorrect, gameLength, secondsToFinish;
-	public GameObject quizPanel, gc, gameOverPanel, questionOKBtn;
+	public GameObject quizPanel, gc, gameOverPanel, questionOKBtn, pauseBtn;
 	public Text scoreText, livesText, gameOverText, GOResponseText, questionsAttemptTxt, questionsCorrectTxt, questionsLeftTxt;
 	private string firstName, lastName;
 	public Stopwatch timer;
@@ -126,6 +126,7 @@ public class PlayerStats : MonoBehaviour {
 		gameOverText.text = "You got " + questionsCorrect + "/" + totalQuestions + " questions correct. Good game!\n" + "You completed the game in " + secondsToFinish + " seconds!";
 		questionOKBtn.SetActive(!tc.qInProgress);
 		uid.TryFetchID();
+		pauseBtn.SetActive(false);
 		tc.PauseGame ();
 	}
 
